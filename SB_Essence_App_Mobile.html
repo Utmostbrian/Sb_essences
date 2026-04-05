@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>SB Essence — PERFUMERIA PREMIUN (Mobile)</title>
+<link href="src/" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   VARIABLES & RESET
+═══════════════════════════════════════════ */
+:root{
+  --bg:#000;--surface:#111;--elevated:#222;
+  --secondary:#888;--primary:#fff;
+  --border:#1e1e1e;--border2:#2a2a2a;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'IBM Plex Sans Condensed','Arial Narrow',sans-serif;
+}
+[data-theme="light"]{
+  --bg:#fff;--surface:#f4f4f4;--elevated:#e8e8e8;
+  --secondary:#777;--primary:#000;
+  --border:#ddd;--border2:#ccc;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:#000;font-family:var(--sans);}
+[data-theme="light"] body{background:#f0f0f0;}
+
+/* ═══════════════════════════════════════════
+   APP SHELL — MOBILE PHONE FRAME
+═══════════════════════════════════════════ */
+.app-shell{
+  position:relative;
+  width:100%;
+  max-width:390px;
+  height:100vh;
+  margin:0 auto;
+  background:var(--bg);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:background .3s;
+}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
+.screen::-webkit-scrollbar{display:none;}
+
+/* STATUS BAR */
+.status-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 20px 4px;font-size:12px;font-weight:500;
+  color:var(--primary);letter-spacing:.05em;flex-shrink:0;
+}
+.status-dots{letter-spacing:2px;}
+
+/* TOP NAV */
+.top-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 20px 10px;flex-shrink:0;
+}
+.top-nav-logo{display:flex;align-items:center;gap:8px;}
+.top-nav-logo img{width:22px;height:22px;border-radius:50%;object-fit:cover;}
+.top-nav-name{
+  font-family:var(--serif);font-size:16px;letter-spacing:.12em;
+  color:var(--primary);font-weight:400;
+}
+.top-nav-actions{display:flex;gap:14px;align-items:center;}
+.nav-icon-btn{background:none;border:none;cursor:pointer;color:var(--primary);position:relative;}
+.cart-badge{
+  position:absolute;top:-5px;right:-6px;
+  width:14px;height:14px;background:var(--primary);color:var(--bg);
+  border-radius:50%;font-size:8px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  background:var(--bg);border-top:0.5px solid var(--border);
+  display:flex;padding:10px 0 20px;flex-shrink:0;
+  transition:background .3s;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;
+}
+.nav-item svg{width:20px;height:20px;}
+.nav-label{
+  font-family:var(--sans);font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--secondary);
+}
+.nav-item.active .nav-label{color:var(--primary);}
+.nav-item.active svg path,
+.nav-item.active svg circle,
+.nav-item.active svg rect{stroke:var(--primary) !important;}
+.nav-item:not(.active) svg path,
+.nav-item:not(.active) svg circle,
+.nav-item:not(.active) svg rect{stroke:var(--secondary) !important;}
+
+/* PAGES */
+.page{display:none;animation:fadeIn .2s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════════════════ */
+.login-wrap{padding:32px 24px 24px;display:flex;flex-direction:column;align-items:center;}
+.login-logo{margin-bottom:14px;}
+.login-logo img{width:72px;height:72px;object-fit:contain;display:block;margin:0 auto;}
+.login-brand{
+  font-family:var(--sans);font-size:11px;letter-spacing:.45em;
+  color:var(--primary);text-transform:uppercase;margin-bottom:32px;text-align:center;
+}
+.form-group{width:100%;margin-bottom:16px;}
+.form-label{
+  display:block;font-size:8px;letter-spacing:.22em;
+  color:var(--secondary);text-transform:uppercase;margin-bottom:6px;
+}
+.form-input{
+  width:100%;background:var(--surface);border:0.5px solid var(--border2);
+  border-radius:3px;padding:13px 15px;color:var(--primary);
+  font-family:var(--sans);font-size:13px;outline:none;
+  transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--secondary);}
+.form-input::placeholder{color:var(--secondary);}
+.forgot-link{
+  font-size:10px;color:var(--secondary);text-align:right;
+  width:100%;margin-bottom:20px;cursor:pointer;letter-spacing:.04em;
+}
+.btn-primary{
+  width:100%;background:var(--primary);color:var(--bg);border:none;
+  padding:15px;font-family:var(--sans);font-size:10px;font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;cursor:pointer;
+  border-radius:2px;margin-bottom:12px;transition:opacity .2s;
+}
+.btn-primary:active{opacity:.8;}
+.divider-row{
+  display:flex;align-items:center;gap:10px;width:100%;margin-bottom:12px;
+}
+.divider-line{flex:1;height:.5px;background:var(--border2);}
+.divider-text{font-size:11px;color:var(--secondary);}
+.btn-outline{
+  width:100%;background:transparent;color:var(--primary);
+  border:0.5px solid var(--border2);padding:13px;
+  font-family:var(--sans);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;cursor:pointer;border-radius:2px;
+}
+
+/* ═══════════════════════════════════════════
+   HOME SCREEN
+═══════════════════════════════════════════ */
+.hero-banner{
+  margin:4px 16px 0;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:10px;padding:20px;display:flex;align-items:center;
+  justify-content:space-between;gap:12px;overflow:hidden;position:relative;
+}
+.hero-badge{
+  font-size:7px;letter-spacing:.35em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:6px;
+}
+.hero-title{
+  font-family:var(--serif);font-size:26px;font-weight:300;
+  font-style:italic;color:var(--primary);line-height:1.1;margin-bottom:10px;
+}
+.hero-cta{
+  font-size:9px;letter-spacing:.25em;color:var(--secondary);
+  text-transform:uppercase;cursor:pointer;
+}
+.hero-img{width:100px;height:90px;object-fit:contain;flex-shrink:0;}
+
+.section-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:18px 18px 10px;
+}
+.section-title{
+  font-family:var(--serif);font-size:17px;letter-spacing:.07em;
+  color:var(--primary);font-weight:400;
+}
+.section-link{
+  font-size:9px;letter-spacing:.18em;color:var(--secondary);
+  text-transform:uppercase;cursor:pointer;
+}
+
+/* CATALOG TABS */
+.cat-tabs{
+  display:flex;margin:0 18px 12px;
+  border:0.5px solid var(--border2);border-radius:2px;overflow:hidden;
+}
+.cat-tab{
+  flex:1;padding:9px 6px;font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;text-align:center;cursor:pointer;
+  background:var(--surface);color:var(--secondary);
+  font-family:var(--sans);border:none;transition:all .2s;
+}
+.cat-tab.active{background:var(--primary);color:var(--bg);font-weight:500;}
+
+/* PRODUCT CARDS ROW */
+.cards-scroll{
+  display:flex;gap:12px;padding:0 18px 20px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.cards-scroll::-webkit-scrollbar{display:none;}
+.product-card{
+  min-width:135px;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:8px;overflow:hidden;flex-shrink:0;cursor:pointer;
+  transition:transform .15s;
+}
+.product-card:active{transform:scale(.97);}
+.product-card-img{
+  width:100%;height:110px;display:flex;align-items:center;
+  justify-content:center;padding:10px;overflow:hidden;
+}
+.product-card-img img{max-width:100%;max-height:95px;object-fit:contain;}
+.product-card-body{padding:10px 10px 12px;}
+.product-card-brand{
+  font-size:8px;letter-spacing:.22em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:2px;
+}
+.product-card-name{
+  font-family:var(--serif);font-size:13px;color:var(--primary);
+  line-height:1.2;margin-bottom:5px;
+}
+.product-card-price{font-size:10px;color:var(--secondary);}
+
+.recommendation-grid{
+  display:grid;grid-template-columns:1fr;gap:12px;padding:0 18px 24px;
+}
+.recommendation-card{
+  background:var(--surface);border:0.5px solid var(--border);border-radius:10px;
+  padding:16px;
+}
+.recommendation-label{
+  font-family:var(--serif);font-size:14px;color:var(--primary);margin-bottom:8px;
+}
+.recommendation-text{
+  font-size:11px;line-height:1.5;color:var(--secondary);
+}
+.recommendation-card{
+  cursor:pointer;transition:transform .2s, border-color .2s, box-shadow .2s;
+}
+.recommendation-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.15);
+  box-shadow:0 12px 25px rgba(0,0,0,.07);
+}
+
+/* GRID 2 COL */
+.cards-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  padding:0 18px 20px;
+}
+
+/* ═══════════════════════════════════════════
+   PRODUCT DETAIL
+═══════════════════════════════════════════ */
+.detail-back{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 18px;cursor:pointer;
+}
+.detail-back svg{width:16px;height:16px;}
+.detail-back-label{
+  font-size:9px;letter-spacing:.22em;color:var(--secondary);text-transform:uppercase;
+}
+.detail-img-wrap{
+  width:100%;height:220px;display:flex;align-items:center;
+  justify-content:center;position:relative;padding:20px;
+}
+.detail-img-wrap img{max-height:190px;object-fit:contain;}
+.detail-img-label{
+  position:absolute;bottom:10px;right:18px;
+  font-size:8px;letter-spacing:.2em;color:var(--secondary);text-transform:uppercase;
+}
+.detail-info{padding:0 18px 20px;}
+.detail-brand{
+  font-size:9px;letter-spacing:.3em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:4px;
+}
+.detail-name{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  color:var(--primary);line-height:1.1;margin-bottom:6px;
+}
+.detail-desc{
+  font-size:11px;color:var(--secondary);line-height:1.7;margin-bottom:16px;
+}
+.sizes-label{
+  font-size:8px;letter-spacing:.22em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:8px;
+}
+.sizes-row{display:flex;gap:8px;margin-bottom:18px;}
+.size-btn{
+  padding:8px 14px;border:0.5px solid var(--border2);border-radius:2px;
+  background:transparent;color:var(--secondary);cursor:pointer;
+  font-family:var(--sans);font-size:10px;text-align:center;line-height:1.4;
+  transition:all .2s;
+}
+.size-btn.active{
+  border-color:var(--primary);color:var(--primary);
+  background:rgba(255,255,255,.06);
+}
+[data-theme="light"] .size-btn.active{background:rgba(0,0,0,.06);}
+.notes-section{border-top:0.5px solid var(--border);padding-top:14px;}
+.notes-title{
+  font-size:8px;letter-spacing:.25em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.notes-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.note-layer{
+  font-size:8px;letter-spacing:.15em;color:var(--secondary);
+  text-transform:uppercase;min-width:56px;padding-top:4px;
+}
+.note-pill{
+  background:var(--elevated);border:0.5px solid var(--border2);
+  border-radius:20px;padding:4px 10px;font-size:9px;color:var(--secondary);
+}
+.detail-price-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;border-top:0.5px solid var(--border);margin-top:10px;
+}
+.detail-price{font-family:var(--serif);font-size:24px;color:var(--primary);}
+.detail-price-sub{font-size:9px;color:var(--secondary);}
+.btn-agregar{
+  background:var(--primary);color:var(--bg);border:none;
+  padding:12px 20px;font-family:var(--sans);font-size:10px;
+  font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  border-radius:2px;cursor:pointer;transition:opacity .2s;
+}
+.btn-agregar:active{opacity:.8;}
+
+/* ═══════════════════════════════════════════
+   CART SCREEN
+═══════════════════════════════════════════ */
+.cart-title{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:var(--primary);padding:14px 18px 16px;
+}
+.cart-item{
+  display:flex;gap:12px;padding:12px 18px;
+  border-bottom:0.5px solid var(--border);align-items:center;
+}
+.cart-item-img{
+  width:52px;height:64px;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:4px;overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.cart-item-img img{width:100%;height:100%;object-fit:contain;padding:4px;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-family:var(--serif);font-size:14px;color:var(--primary);margin-bottom:2px;}
+.cart-item-sub{font-size:8px;letter-spacing:.12em;color:var(--secondary);text-transform:uppercase;margin-bottom:8px;}
+.qty-control{display:flex;align-items:center;gap:10px;}
+.qty-btn{
+  width:22px;height:22px;border:0.5px solid var(--border2);
+  border-radius:2px;background:var(--surface);color:var(--primary);
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;user-select:none;font-family:var(--sans);
+}
+.qty-num{font-size:12px;color:var(--primary);min-width:12px;text-align:center;}
+.cart-item-price{
+  font-family:var(--serif);font-size:16px;color:var(--primary);
+  align-self:flex-start;margin-top:2px;flex-shrink:0;
+}
+.cart-summary{
+  margin:16px 18px 0;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:6px;padding:14px;
+}
+.summary-row{display:flex;justify-content:space-between;padding:4px 0;}
+.summary-label{font-size:9px;letter-spacing:.1em;color:var(--secondary);text-transform:uppercase;}
+.summary-value{font-size:11px;color:var(--secondary);}
+.summary-total-row{
+  display:flex;justify-content:space-between;
+  border-top:0.5px solid var(--border2);padding-top:10px;margin-top:6px;
+}
+.summary-total-label{font-size:9px;letter-spacing:.12em;color:var(--primary);text-transform:uppercase;}
+.summary-total-value{font-family:var(--serif);font-size:22px;color:var(--primary);}
+.btn-proceder{
+  margin:14px 18px 0;display:block;width:calc(100% - 36px);
+  background:var(--primary);color:var(--bg);border:none;padding:15px;
+  font-family:var(--sans);font-size:10px;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;cursor:pointer;
+  border-radius:2px;transition:opacity .2s;
+}
+.btn-proceder:active{opacity:.8;}
+
+/* ═══════════════════════════════════════════
+   PAYMENT SCREEN
+═══════════════════════════════════════════ */
+.payment-title{
+  font-family:var(--serif);font-size:22px;color:var(--primary);
+  padding:14px 18px 16px;
+}
+.payment-amount{
+  font-family:var(--serif);font-size:15px;color:var(--secondary);
+  padding:0 18px 14px;
+}
+.payment-method{
+  margin:0 18px 10px;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:6px;padding:14px 16px;display:flex;align-items:center;
+  gap:12px;cursor:pointer;transition:border-color .2s;
+}
+.payment-method.selected{border-color:var(--primary);}
+.pm-icon{
+  width:34px;height:34px;background:var(--elevated);border:0.5px solid var(--border2);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pm-info{flex:1;}
+.pm-name{font-size:12px;color:var(--primary);margin-bottom:2px;letter-spacing:.05em;}
+.pm-sub{font-size:9px;color:var(--secondary);}
+.pm-radio{
+  width:16px;height:16px;border:0.5px solid var(--border2);border-radius:50%;
+  position:relative;flex-shrink:0;
+}
+.pm-radio.on::after{
+  content:'';position:absolute;width:8px;height:8px;
+  background:var(--primary);border-radius:50%;top:3px;left:3px;
+}
+.qr-section{
+  margin:0 18px;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:6px;padding:18px;display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+}
+.qr-scan-label{font-size:8px;letter-spacing:.28em;color:var(--secondary);text-transform:uppercase;}
+.qr-box{
+  width:110px;height:110px;background:#fff;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;padding:8px;
+}
+.qr-box img{max-width:100%;height:auto;object-fit:contain;}
+.qr-id{font-size:9px;letter-spacing:.18em;color:var(--secondary);}
+.qr-total{font-family:var(--serif);font-size:24px;color:var(--primary);}
+.btn-confirmar{
+  margin:14px 18px 0;display:block;width:calc(100% - 36px);
+  background:var(--primary);color:var(--bg);border:none;padding:15px;
+  font-family:var(--sans);font-size:10px;font-weight:500;
+  letter-spacing:.28em;text-transform:uppercase;cursor:pointer;
+  border-radius:2px;
+}
+
+/* ═══════════════════════════════════════════
+   PROFILE SCREEN
+═══════════════════════════════════════════ */
+.profile-hero{
+  background:var(--surface);border-bottom:0.5px solid var(--border);
+  padding:20px 18px;display:flex;align-items:center;gap:14px;
+}
+.profile-avatar{
+  width:58px;height:58px;border-radius:50%;overflow:hidden;
+  border:1px solid var(--border2);flex-shrink:0;
+}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;}
+.profile-name{font-family:var(--serif);font-size:18px;color:var(--primary);margin-bottom:2px;}
+.profile-email{font-size:10px;color:var(--secondary);}
+.profile-menu-item{
+  display:flex;align-items:center;gap:12px;padding:15px 18px;
+  border-bottom:0.5px solid var(--border);cursor:pointer;
+}
+.profile-menu-item:last-child{border-bottom:none;}
+.pmi-icon{
+  width:30px;height:30px;background:var(--surface);border:0.5px solid var(--border);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pmi-body{flex:1;}
+.pmi-label{font-size:13px;color:var(--primary);margin-bottom:2px;}
+.pmi-sub{font-size:10px;color:var(--secondary);}
+.pmi-arrow{font-size:14px;color:var(--border2);}
+.pmi-label.danger{color:#c0392b;}
+
+.profile-section{
+  padding:16px 18px;border-bottom:0.5px solid var(--border2);
+}
+.profile-section-title{
+  font-size:12px;letter-spacing:.18em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:12px;font-weight:500;
+}
+.address-card{
+  background:var(--surface);border:0.5px solid var(--border);border-radius:8px;
+  padding:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+}
+.address-text{
+  flex:1;font-size:12px;line-height:1.5;color:var(--secondary);
+}
+.btn-edit{
+  background:transparent;border:0.5px solid var(--border);color:var(--primary);
+  padding:6px 12px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  cursor:pointer;border-radius:2px;flex-shrink:0;transition:all .2s;
+}
+.btn-edit:hover{
+  background:var(--primary);color:var(--bg);
+}
+.btn-cancel{
+  width:100%;background:transparent;color:var(--secondary);
+  border:0.5px solid var(--border2);padding:12px;font-family:var(--sans);
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
+  border-radius:2px;margin-top:8px;transition:all .2s;
+}
+.btn-cancel:hover{
+  border-color:var(--secondary);color:var(--primary);
+}
+.profile-address{
+  font-size:11px;color:var(--secondary);margin-top:6px;
+}
+
+/* THEME TOGGLE in profile */
+.theme-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 18px;border-bottom:0.5px solid var(--border);
+}
+.theme-toggle-track{
+  width:44px;height:24px;background:var(--elevated);border:0.5px solid var(--border2);
+  border-radius:12px;position:relative;cursor:pointer;transition:background .3s;
+}
+.theme-toggle-track.on{background:var(--primary);}
+.theme-toggle-thumb{
+  width:18px;height:18px;background:#fff;border-radius:50%;
+  position:absolute;top:2px;left:3px;
+  transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+.theme-toggle-track.on .theme-toggle-thumb{transform:translateX(20px);}
+[data-theme="light"] .theme-toggle-thumb{background:#000;}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
+  background:var(--primary);color:var(--bg);padding:10px 20px;
+  border-radius:20px;font-size:12px;letter-spacing:.06em;
+  opacity:0;transition:opacity .3s;z-index:999;pointer-events:none;
+  font-family:var(--sans);white-space:nowrap;
+}
+.toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     MOBILE APP SHELL
+═══════════════════════════════════════ -->
+<div class="app-shell" id="appShell">
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <span class="status-dots">●●●</span>
+  </div>
+
+  <!-- TOP NAV (hidden on login) -->
+  <div class="top-nav" id="topNav" style="display:none">
+    <div class="top-nav-logo">
+      <img src="src/Essences.png" alt="Essences">
+      <span class="top-nav-name">SB Essence</span>
+    </div>
+    <div class="top-nav-actions">
+      <button class="nav-icon-btn" id="searchBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+      <button class="nav-icon-btn" id="cartBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="21" r="1"></circle>
+          <circle cx="19" cy="21" r="1"></circle>
+          <path d="m2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+        </svg>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN CONTENT -->
+  <div class="screen" id="screen">
+
+    <!-- LOGIN PAGE -->
+    <div class="page login-page active" id="loginPage">
+      <div class="login-wrap">
+        <div class="login-logo">
+          <img src="src/Essences.png" alt="Essences">
+        </div>
+        <div class="login-brand">PERFUMERIA PREMIUN</div>
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" class="form-input" placeholder="bserrudob@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contraseña</label>
+            <input type="password" class="form-input" placeholder="••••••••" required>
+          </div>
+          <div class="forgot-link" id="forgotLink">¿Olvidaste tu contraseña?</div>
+          <button type="submit" class="btn-primary">INGRESAR</button>
+          <div class="divider-row">
+            <div class="divider-line"></div>
+            <div class="divider-text">o</div>
+            <div class="divider-line"></div>
+          </div>
+          <button type="button" class="btn-outline" id="registerBtn">CREAR CUENTA</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="page home-page" id="homePage">
+      <div class="hero-banner">
+        <div>
+          <div class="hero-badge">NUEVA COLECCIÓN</div>
+          <div class="hero-title">Fragancias
+            <br>del Oriente</div>
+          <div class="hero-cta" id="heroCta">Descubrir →</div>
+        </div>
+        <div class="hero-img">
+          <img src="src/club_nuit.png" alt="Essence de Nuit">
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Catálogo</div>
+        <div class="section-link" id="catalogLink">Ver todo</div>
+      </div>
+
+      <div class="cat-tabs">
+        <button class="cat-tab active" data-category="all">Todo</button>
+        <button class="cat-tab" data-category="femenino">Femenino</button>
+        <button class="cat-tab" data-category="masculino">Masculino</button>
+        <button class="cat-tab" data-category="unisex">Unisex</button>
+      </div>
+
+      <div class="cards-scroll" id="productGrid">
+        <!-- Products will be loaded here -->
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Recomendaciones</div>
+      </div>
+      <div class="recommendation-grid">
+        <div class="recommendation-card" data-occasion="work">
+          <div class="recommendation-label">Trabajo y reuniones</div>
+          <div class="recommendation-text">Fragancias suaves con toques cítricos y amaderados para proyectar confianza y frescura.</div>
+        </div>
+        <div class="recommendation-card" data-occasion="romantic">
+          <div class="recommendation-label">Citas románticas</div>
+          <div class="recommendation-text">Elegí perfumes con notas florales o vainilla para una presencia seductora y envolvente.</div>
+        </div>
+        <div class="recommendation-card" data-occasion="special">
+          <div class="recommendation-label">Eventos especiales</div>
+          <div class="recommendation-text">Opta por fragancias intensas y duraderas que destaquen tu estilo en celebraciones.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATALOG PAGE -->
+    <div class="page catalog-page" id="catalogPage">
+      <div class="section-header">
+        <div class="section-title">Catálogo completo</div>
+        <div class="section-link" id="catalogBack">Volver</div>
+      </div>
+      <div class="cat-tabs">
+        <button class="cat-tab active" data-category="all">Todo</button>
+        <button class="cat-tab" data-category="femenino">Femenino</button>
+        <button class="cat-tab" data-category="masculino">Masculino</button>
+        <button class="cat-tab" data-category="unisex">Unisex</button>
+      </div>
+      <div class="cards-scroll" id="catalogGrid">
+        <!-- Catalog products will be loaded here -->
+      </div>
+    </div>
+
+    <!-- REGISTER PAGE -->
+    <div class="page auth-page" id="registerPage">
+      <div class="section-header">
+        <div class="section-title">Crear cuenta</div>
+        <div class="section-link" id="registerBack">Volver</div>
+      </div>
+      <form id="registerForm" class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" class="form-input" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" class="form-input" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input type="password" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary">Crear cuenta</button>
+      </form>
+    </div>
+
+    <!-- FORGOT PASSWORD PAGE -->
+    <div class="page auth-page" id="forgotPage">
+      <div class="section-header">
+        <div class="section-title">Recuperar contraseña</div>
+        <div class="section-link" id="forgotBack">Volver</div>
+      </div>
+      <form id="forgotForm" class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" class="form-input" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        <button type="submit" class="btn-primary">Enviar instrucciones</button>
+      </form>
+    </div>
+
+    <!-- PRODUCT DETAIL PAGE -->
+    <div class="page detail-page" id="detailPage">
+      <div class="detail-back" id="detailBack">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 12H5"></path>
+          <path d="m12 19-7-7 7-7"></path>
+        </svg>
+        <span class="detail-back-label">Volver</span>
+      </div>
+
+      <div class="detail-img-wrap">
+        <img id="detailImg" src="" alt="">
+        <div class="detail-img-label">Vista previa</div>
+      </div>
+
+      <div class="detail-info">
+        <div class="detail-brand" id="detailBrand"></div>
+        <div class="detail-name" id="detailName"></div>
+        <div class="detail-desc" id="detailDesc"></div>
+
+        <div class="sizes-label">Tamaño</div>
+        <div class="sizes-row" id="sizesRow">
+          <!-- Sizes will be loaded here -->
+        </div>
+
+        <div class="notes-section">
+          <div class="notes-title">Notas</div>
+          <div class="notes-row" id="notesRow">
+            <!-- Notes will be loaded here -->
+          </div>
+        </div>
+
+        <div class="detail-price-row">
+          <div>
+            <div class="detail-price" id="detailPrice"></div>
+            <div class="detail-price-sub"></div>
+          </div>
+          <button class="btn-agregar" id="addToCartBtn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CART PAGE -->
+    <div class="page cart-page" id="cartPage">
+      <div class="cart-title">Carrito</div>
+      <div id="cartItems">
+        <!-- Cart items will be loaded here -->
+      </div>
+      <div class="cart-summary" id="cartSummary" style="display:none">
+        <div class="summary-row">
+          <div class="summary-label">Subtotal</div>
+          <div class="summary-value" id="subtotal">0 Bs</div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-label">Envío</div>
+          <div class="summary-value" id="shipping">Gratis</div>
+        </div>
+        <div class="summary-total-row">
+          <div class="summary-total-label">Total</div>
+          <div class="summary-total-value" id="total">0 Bs</div>
+        </div>
+      </div>
+      <button class="btn-proceder" id="checkoutBtn" style="display:none">Proceder al pago</button>
+    </div>
+
+    <!-- PAYMENT PAGE -->
+    <div class="page payment-page" id="paymentPage">
+      <div class="payment-title">Pago</div>
+      <div class="payment-amount" id="paymentAmount">Total: 0 Bs</div>
+
+      <div class="payment-method selected" data-method="card">
+        <div class="pm-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <line x1="2" y1="10" x2="22" y2="10"></line>
+          </svg>
+        </div>
+        <div class="pm-info">
+          <div class="pm-name">Tarjeta de crédito</div>
+          <div class="pm-sub">Visa, Mastercard</div>
+        </div>
+        <div class="pm-radio on"></div>
+      </div>
+
+      <div class="payment-method" data-method="efectivo">
+        <div class="pm-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            <rect x="5" y="11" width="14" height="10" rx="2"></rect>
+          </svg>
+        </div>
+        <div class="pm-info">
+          <div class="pm-name">Pago en efectivo</div>
+          <div class="pm-sub">Pago seguro en efectivo</div>
+        </div>
+        <div class="pm-radio"></div>
+      </div>
+
+      <div class="qr-section">
+        <div class="qr-scan-label">Escanea para pagar</div>
+        <div class="qr-box">
+          <img src="src/qr.png" alt="QR de pago">
+        </div>
+        <div class="qr-id">ID: SB-123456789</div>
+        <div class="qr-total" id="qrTotal">0 Bs</div>
+      </div>
+
+      <button class="btn-confirmar" id="confirmPaymentBtn">Confirmar pago</button>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div class="page profile-page" id="profilePage">
+      <div class="section-header">
+        <div class="section-title">Mi perfil</div>
+        <div class="section-link" id="profileBack">Volver</div>
+      </div>
+      <div class="profile-hero">
+        <div class="profile-avatar">
+          <img src="src/profile.jpg" alt="Foto de perfil">
+        </div>
+        <div>
+          <div class="profile-name" id="profileName">Brian Serrudo</div>
+          <div class="profile-email" id="profileEmail">bserrudob@gmail.com</div>
+          <div class="profile-address" id="profileAddress">Sin direccion registrada</div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">Direccion de envio</div>
+        <div class="address-card" id="addressCard">
+          <div class="address-text" id="addressText">No hay direccion registrada</div>
+          <button class="btn-edit" id="editAddressBtn">Editar</button>
+        </div>
+      </div>
+
+      <div class="profile-section" id="addressEditForm" style="display:none;">
+        <form id="addressFormEl">
+          <div class="form-group">
+            <label class="form-label">Direccion</label>
+            <input type="text" class="form-input" id="addressInput" placeholder="Calle y numero" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ciudad</label>
+            <input type="text" class="form-input" id="cityInput" placeholder="Tu ciudad" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefono de contacto</label>
+            <input type="tel" class="form-input" id="phoneInput" placeholder="Tu telefono" required>
+          </div>
+          <button type="submit" class="btn-primary">Guardar direccion</button>
+          <button type="button" class="btn-cancel" id="cancelAddressBtn">Cancelar</button>
+        </form>
+      </div>
+
+      <div class="profile-menu-item" id="ordersBtn">
+        <div class="pmi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 12l2 2 4-4"></path>
+            <path d="M21 12c.552 0 1-.448 1-1V5c0-.552-.448-1-1-1H3c-.552 0-1 .448-1 1v6c0 .552.448 1 1 1h18z"></path>
+            <path d="M3 12v7c0 .552.448 1 1 1h16c.552 0 1-.448 1-1v-7"></path>
+          </svg>
+        </div>
+        <div class="pmi-body">
+          <div class="pmi-label">Mis pedidos</div>
+          <div class="pmi-sub">Historial de compras</div>
+        </div>
+        <div class="pmi-arrow">›</div>
+      </div>
+
+      <div class="profile-menu-item" id="favoritesBtn">
+        <div class="pmi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+        <div class="pmi-body">
+          <div class="pmi-label">Favoritos</div>
+          <div class="pmi-sub">Productos guardados</div>
+        </div>
+        <div class="pmi-arrow">›</div>
+      </div>
+
+      <div class="profile-menu-item" id="settingsBtn">
+        <div class="pmi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </div>
+        <div class="pmi-body">
+          <div class="pmi-label">Configuración</div>
+          <div class="pmi-sub">Preferencias y ajustes</div>
+        </div>
+        <div class="pmi-arrow">›</div>
+      </div>
+
+      <div class="theme-row">
+        <div class="pmi-label">Tema oscuro</div>
+        <div class="theme-toggle-track" id="themeToggle">
+          <div class="theme-toggle-thumb"></div>
+        </div>
+      </div>
+
+      <div class="profile-menu-item" id="logoutBtn">
+        <div class="pmi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16,17 21,12 16,7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </div>
+        <div class="pmi-body">
+          <div class="pmi-label danger">Cerrar sesión</div>
+          <div class="pmi-sub">Salir de la cuenta</div>
+        </div>
+        <div class="pmi-arrow">›</div>
+      </div>
+    </div>
+
+    <!-- ORDERS PAGE -->
+    <div class="page info-page" id="ordersPage">
+      <div class="section-header">
+        <div class="section-title">Mis pedidos</div>
+        <div class="section-link" id="ordersBack">Volver</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Historial de pedidos</div>
+        <div class="profile-sub">Aún no tienes pedidos recientes.</div>
+      </div>
+    </div>
+
+    <!-- FAVORITES PAGE -->
+    <div class="page info-page" id="favoritesPage">
+      <div class="section-header">
+        <div class="section-title">Favoritos</div>
+        <div class="section-link" id="favoritesBack">Volver</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Tus favoritos</div>
+        <div class="profile-sub">Agrega perfumes a favoritos desde el catálogo.</div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div class="page info-page" id="settingsPage">
+      <div class="section-header">
+        <div class="section-title">Configuración</div>
+        <div class="section-link" id="settingsBack">Volver</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Ajustes de la app</div>
+        <div class="profile-sub">Configura tema y preferencias de tu cuenta.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav" id="bottomNav" style="display:none">
+    <div class="nav-item active" data-page="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+      </svg>
+      <div class="nav-label">Inicio</div>
+    </div>
+    <div class="nav-item" data-page="catalog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <div class="nav-label">Catálogo</div>
+    </div>
+    <div class="nav-item" data-page="cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="8" cy="21" r="1"></circle>
+        <circle cx="19" cy="21" r="1"></circle>
+        <path d="m2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+      </svg>
+      <div class="nav-label">Carrito</div>
+    </div>
+    <div class="nav-item" data-page="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <div class="nav-label">Perfil</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// App state
+let currentPage = 'login';
+let currentTheme = localStorage.getItem('theme') || 'dark';
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let profileData = JSON.parse(localStorage.getItem('profileData')) || {
+  name: 'Brian Serrudo',
+  email: 'bserrudob@gmail.com',
+  address: '',
+  city: '',
+  phone: ''
+};
+let products = [
+  {
+    id: 1,
+    name: 'Club de Nuit Intense Man',
+    brand: 'Armaf',
+    price: 89,
+    category: 'masculino',
+    img: 'src/club_nuit.png',
+    sizes: ['50ml', '100ml'],
+    occasions: ['work', 'special'],
+    notes: { top: ['Bergamota', 'Mandarina'], heart: ['Jazmín', 'Rosa'], base: ['Vainilla', 'Ámbar'] }
+  },
+  {
+    id: 2,
+    name: 'Club de Nuit Woman',
+    brand: 'Armaf',
+    price: 75,
+    category: 'femenino',
+    img: 'src/club_woman.png',
+    sizes: ['50ml', '100ml'],
+    occasions: ['romantic', 'special'],
+    notes: { top: ['Frutas Rojas', 'Pera'], heart: ['Floral Blanco'], base: ['Madera', 'Musk'] }
+  },
+  {
+    id: 3,
+    name: 'Odyssey Mandarin Sky',
+    brand: 'Armaf',
+    price: 65,
+    category: 'unisex',
+    img: 'src/mandarin.png',
+    sizes: ['50ml', '100ml'],
+    occasions: ['work', 'romantic', 'special'],
+    notes: { top: ['Mandarina', 'Cítricos'], heart: ['Jengibre', 'Especias'], base: ['Ámbar', 'Vainilla'] }
+  },
+  {
+    id: 4,
+    name: '9AM Dive',
+    brand: 'Afnan',
+    price: 95,
+    category: 'masculino',
+    img: 'src/9am.png',
+    sizes: ['50ml', '100ml'],
+    occasions: ['work', 'special'],
+    notes: { top: ['Cítricos', 'Pimienta'], heart: ['Lavanda', 'Geranio'], base: ['Cuero', 'Tabaco'] }
+  },
+  {
+    id: 5,
+    name: '9PM',
+    brand: 'Afnan',
+    price: 85,
+    category: 'masculino',
+    img: 'src/9pm.png',
+    sizes: ['50ml', '100ml'],
+    occasions: ['romantic', 'special'],
+    notes: { top: ['Bergamota', 'Cardamomo'], heart: ['Patchouli', 'Vetiver'], base: ['Ámbar', 'Musk'] }
+  },
+ 
+  {
+    id: 7,
+    name: 'Yara Candy',
+    brand: 'Lattafa',
+    price: 70,
+    category: 'femenino',
+    img: 'src/yara.png',
+    sizes: ['50ml', '100ml'],
+    occasions: ['romantic', 'special'],
+    notes: { top: ['Frutas Tropicales'], heart: ['Floral Dulce'], base: ['Caramelo', 'Vainilla'] }
+  }
+];
+
+// DOM elements
+const appShell = document.getElementById('appShell');
+const screen = document.getElementById('screen');
+const topNav = document.getElementById('topNav');
+const bottomNav = document.getElementById('bottomNav');
+const toast = document.getElementById('toast');
+
+// Initialize app
+document.addEventListener('DOMContentLoaded', () => {
+  setTheme(currentTheme);
+  renderProducts();
+  updateCartBadge();
+  updateCartDisplay();
+  loadProfileData();
+});
+
+// Theme functions
+function setTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    toggle.classList.toggle('on', theme === 'dark');
+  }
+}
+
+// Navigation
+function navigateTo(page) {
+  const targetPage = document.getElementById(page + 'Page');
+  if (!targetPage) return;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  targetPage.classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.page === page);
+  });
+
+  if (page === 'login') {
+    topNav.style.display = 'none';
+    bottomNav.style.display = 'none';
+  } else {
+    topNav.style.display = 'flex';
+    bottomNav.style.display = 'flex';
+  }
+
+  currentPage = page;
+  if (page === 'catalog') {
+    renderProducts('all', 'catalogGrid');
+  }
+  if (page === 'home') {
+    renderProducts('all', 'productGrid');
+  }
+}
+
+function showOccasionCatalog(occasion) {
+  navigateTo('catalog');
+  renderProducts('all', 'catalogGrid', occasion);
+}
+
+// Product rendering
+function renderProducts(category = 'all', containerId = 'productGrid', occasion = null) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+  grid.innerHTML = '';
+  
+  let filtered = category === 'all' ? products.slice() : products.filter(p => p.category === category);
+  if (occasion) {
+    filtered = filtered.filter(p => p.occasions && p.occasions.includes(occasion));
+  }
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:28px;color:var(--secondary);">No hay perfumes para esta ocasión.</div>';
+    return;
+  }
+  
+  filtered.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.onclick = () => showProductDetail(product);
+    
+    card.innerHTML = `
+      <div class="product-card-img">
+        <img src="${product.img}" alt="${product.name}">
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-brand">${product.brand}</div>
+        <div class="product-card-name">${product.name}</div>
+        <div class="product-card-price">${product.price} Bs</div>
+      </div>
+    `;
+    
+    grid.appendChild(card);
+  });
+}
+
+// Product detail
+function showProductDetail(product) {
+  document.getElementById('detailImg').src = product.img;
+  document.getElementById('detailBrand').textContent = product.brand;
+  document.getElementById('detailName').textContent = product.name;
+  document.getElementById('detailDesc').textContent = 'Perfume premium de alta calidad con notas exclusivas.';
+  document.getElementById('detailPrice').textContent = product.price + ' Bs';
+  
+  // Sizes
+  const sizesRow = document.getElementById('sizesRow');
+  sizesRow.innerHTML = '';
+  product.sizes.forEach(size => {
+    const btn = document.createElement('button');
+    btn.className = 'size-btn';
+    btn.textContent = size;
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    sizesRow.appendChild(btn);
+  });
+  
+  // Notes
+  const notesRow = document.getElementById('notesRow');
+  notesRow.innerHTML = '';
+  
+  if (product.notes.top) {
+    notesRow.innerHTML += `
+      <div class="note-layer">Notas altas</div>
+      <div class="note-pill">${product.notes.top.join(', ')}</div>
+    `;
+  }
+  
+  if (product.notes.heart) {
+    notesRow.innerHTML += `
+      <div class="note-layer">Notas corazón</div>
+      <div class="note-pill">${product.notes.heart.join(', ')}</div>
+    `;
+  }
+  
+  if (product.notes.base) {
+    notesRow.innerHTML += `
+      <div class="note-layer">Notas base</div>
+      <div class="note-pill">${product.notes.base.join(', ')}</div>
+    `;
+  }
+  
+  navigateTo('detail');
+}
+
+// Cart functions
+function addToCart(product) {
+  const existing = cart.find(item => item.id === product.id);
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartBadge();
+  updateCartDisplay();
+  showToast('Producto agregado al carrito');
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cartBadge');
+  const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+  badge.textContent = total;
+  badge.style.display = total > 0 ? 'flex' : 'none';
+}
+
+function updateCartDisplay() {
+  const cartItems = document.getElementById('cartItems');
+  const cartSummary = document.getElementById('cartSummary');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  
+  cartItems.innerHTML = '';
+  
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<div style="text-align:center;padding:40px;color:var(--secondary);">Tu carrito está vacío</div>';
+    cartSummary.style.display = 'none';
+    checkoutBtn.style.display = 'none';
+    return;
+  }
+  
+  cart.forEach(item => {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'cart-item';
+    itemDiv.innerHTML = `
+      <div class="cart-item-img">
+        <img src="${item.img}" alt="${item.name}">
+      </div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-sub">${item.brand} • ${item.sizes[0]}</div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQuantity(${item.id}, -1)">−</button>
+          <div class="qty-num">${item.quantity}</div>
+          <button class="qty-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+        </div>
+      </div>
+      <div class="cart-item-price">${(item.price * item.quantity).toFixed(2)} Bs</div>
+    `;
+    cartItems.appendChild(itemDiv);
+  });
+  
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' Bs';
+  document.getElementById('total').textContent = subtotal.toFixed(2) + ' Bs';
+  
+  cartSummary.style.display = 'block';
+  checkoutBtn.style.display = 'block';
+}
+
+function changeQuantity(id, delta) {
+  const item = cart.find(item => item.id === id);
+  if (item) {
+    item.quantity += delta;
+    if (item.quantity <= 0) {
+      cart = cart.filter(item => item.id !== id);
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge();
+    updateCartDisplay();
+  }
+}
+
+// Toast
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Profile functions
+function loadProfileData() {
+  document.getElementById('profileName').textContent = profileData.name;
+  document.getElementById('profileEmail').textContent = profileData.email;
+  
+  if (profileData.address) {
+    document.getElementById('profileAddress').textContent = profileData.address + ', ' + profileData.city;
+    const addressDisplay = profileData.address + ', ' + profileData.city + ' • ' + profileData.phone;
+    document.getElementById('addressText').textContent = addressDisplay;
+  }
+}
+
+function showAddressForm() {
+  const form = document.getElementById('addressEditForm');
+  const card = document.getElementById('addressCard');
+  form.style.display = 'block';
+  card.style.display = 'none';
+  
+  document.getElementById('addressInput').value = profileData.address || '';
+  document.getElementById('cityInput').value = profileData.city || '';
+  document.getElementById('phoneInput').value = profileData.phone || '';
+}
+
+function hideAddressForm() {
+  const form = document.getElementById('addressEditForm');
+  const card = document.getElementById('addressCard');
+  form.style.display = 'none';
+  card.style.display = 'flex';
+}
+
+function saveAddress(address, city, phone) {
+  profileData.address = address;
+  profileData.city = city;
+  profileData.phone = phone;
+  localStorage.setItem('profileData', JSON.stringify(profileData));
+  loadProfileData();
+  hideAddressForm();
+  showToast('Direccion guardada con exito');
+}
+
+// Event listeners
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  navigateTo('home');
+});
+
+document.getElementById('heroCta').addEventListener('click', () => {
+  navigateTo('catalog');
+});
+
+document.getElementById('catalogLink').addEventListener('click', () => {
+  navigateTo('catalog');
+});
+
+document.querySelectorAll('.cat-tabs').forEach(tabGroup => {
+  tabGroup.querySelectorAll('.cat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabGroup.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const gridId = tabGroup.closest('#catalogPage') ? 'catalogGrid' : 'productGrid';
+      renderProducts(tab.dataset.category, gridId);
+    });
+  });
+});
+
+document.getElementById('catalogBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('profileBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('registerBtn').addEventListener('click', () => {
+  navigateTo('register');
+});
+
+document.getElementById('forgotLink').addEventListener('click', () => {
+  navigateTo('forgot');
+});
+
+document.getElementById('registerBack').addEventListener('click', () => {
+  navigateTo('login');
+});
+
+document.getElementById('forgotBack').addEventListener('click', () => {
+  navigateTo('login');
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  cart = [];
+  localStorage.removeItem('cart');
+  updateCartBadge();
+  updateCartDisplay();
+  navigateTo('login');
+  showToast('Sesión cerrada');
+});
+
+document.getElementById('registerForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  showToast('Cuenta creada con éxito');
+  navigateTo('login');
+});
+
+document.getElementById('forgotForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  showToast('Revisa tu correo para restablecer tu contraseña');
+  navigateTo('login');
+});
+
+document.getElementById('detailBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('addToCartBtn').addEventListener('click', () => {
+  const selectedSize = document.querySelector('.size-btn.active');
+  if (!selectedSize) {
+    showToast('Selecciona un tamaño');
+    return;
+  }
+  
+  const product = products.find(p => p.name === document.getElementById('detailName').textContent);
+  addToCart(product);
+});
+
+document.getElementById('cartBtn').addEventListener('click', () => {
+  navigateTo('cart');
+});
+
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  document.getElementById('paymentAmount').textContent = `Total: ${total.toFixed(2)} Bs`;
+  document.getElementById('qrTotal').textContent = total.toFixed(2) + ' Bs';
+  navigateTo('payment');
+});
+
+document.querySelectorAll('.payment-method').forEach(method => {
+  method.addEventListener('click', () => {
+    document.querySelectorAll('.payment-method').forEach(m => {
+      m.classList.remove('selected');
+      m.querySelector('.pm-radio').classList.remove('on');
+    });
+    method.classList.add('selected');
+    method.querySelector('.pm-radio').classList.add('on');
+  });
+});
+
+document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+  cart = [];
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartBadge();
+  showToast('Pago confirmado. ¡Gracias por tu compra!');
+  navigateTo('home');
+});
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    navigateTo(item.dataset.page);
+  });
+});
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+});
+
+document.querySelectorAll('.recommendation-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const occasion = card.dataset.occasion;
+    if (occasion) {
+      showOccasionCatalog(occasion);
+    }
+  });
+});
+
+document.getElementById('ordersBtn').addEventListener('click', () => {
+  navigateTo('orders');
+});
+
+document.getElementById('favoritesBtn').addEventListener('click', () => {
+  navigateTo('favorites');
+});
+
+document.getElementById('settingsBtn').addEventListener('click', () => {
+  navigateTo('settings');
+});
+
+document.getElementById('ordersBack').addEventListener('click', () => {
+  navigateTo('profile');
+});
+
+document.getElementById('favoritesBack').addEventListener('click', () => {
+  navigateTo('profile');
+});
+
+document.getElementById('settingsBack').addEventListener('click', () => {
+  navigateTo('profile');
+});
+
+document.getElementById('editAddressBtn').addEventListener('click', () => {
+  showAddressForm();
+});
+
+document.getElementById('cancelAddressBtn').addEventListener('click', () => {
+  hideAddressForm();
+});
+
+document.getElementById('addressFormEl').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const address = document.getElementById('addressInput').value;
+  const city = document.getElementById('cityInput').value;
+  const phone = document.getElementById('phoneInput').value;
+  
+  if (address && city && phone) {
+    saveAddress(address, city, phone);
+  }
+});
+</script>
+
+</body>
+</html>
