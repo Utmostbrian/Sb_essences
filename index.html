@@ -1012,8 +1012,8 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Imagen (src/)</label>
-          <input type="text" class="form-input" id="perfumeImg" placeholder="e.g. club_nuit.png" required>
+          <label class="form-label">Imagen</label>
+          <input type="file" class="form-input" id="perfumeImg" accept="image/*" required>
         </div>
         <button type="submit" class="btn-primary">Agregar Perfume</button>
       </form>
@@ -1811,24 +1811,35 @@ document.getElementById('addPerfumeForm').addEventListener('submit', (e) => {
   const brand = document.getElementById('perfumeBrand').value;
   const price = parseFloat(document.getElementById('perfumePrice').value);
   const category = document.getElementById('perfumeCategory').value;
-  const img = 'src/' + document.getElementById('perfumeImg').value;
+  const imgInput = document.getElementById('perfumeImg');
   
-  const newProduct = {
-    id: products.length + 1,
-    name,
-    brand,
-    price,
-    category,
-    img,
-    sizes: ['50ml', '100ml'],
-    occasions: ['work', 'special'],
-    notes: { top: [], heart: [], base: [] }
-  };
-  products.push(newProduct);
-  sales.push({ id: newProduct.id, sold: 0 });
-  localStorage.setItem('sales', JSON.stringify(sales));
-  showToast('Perfume agregado');
-  navigateTo('admin');
+  if (imgInput.files && imgInput.files[0]) {
+    const file = imgInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const imgData = event.target.result;
+      const newProduct = {
+        id: products.length + 1,
+        name,
+        brand,
+        price,
+        category,
+        img: imgData,
+        sizes: ['50ml', '100ml'],
+        occasions: ['work', 'special'],
+        notes: { top: [], heart: [], base: [] }
+      };
+      products.push(newProduct);
+      sales.push({ id: newProduct.id, sold: 0 });
+      localStorage.setItem('sales', JSON.stringify(sales));
+      showToast('Perfume agregado');
+      navigateTo('admin');
+      renderProducts('all', 'productGrid');
+    };
+    reader.readAsDataURL(file);
+  } else {
+    showToast('Selecciona una imagen');
+  }
 });
 
 document.getElementById('addDiscountForm').addEventListener('submit', (e) => {
@@ -1908,8 +1919,8 @@ function renderSales() {
     const sold = sale ? sale.sold : 0;
     salesList.innerHTML += `
       <div class="profile-card" style="margin-bottom:10px;">
-        <div class="profile-name">${product.name}</div>
-        <div class="profile-sub">Ventas: ${sold}</div>
+        <div class="profile-name" style="color: white;">${product.name}</div>
+        <div class="profile-sub" style="color: white;">Ventas: ${sold}</div>
       </div>
     `;
   });
@@ -1990,8 +2001,8 @@ function renderLogs() {
   userLogs.forEach(log => {
     logsList.innerHTML += `
       <div class="profile-card" style="margin-bottom:10px;">
-        <div class="profile-name">${log.action}</div>
-        <div class="profile-sub">Usuario: ${log.user} - Fecha: ${log.date}</div>
+        <div class="profile-name" style="color: white;">${log.action}</div>
+        <div class="profile-sub" style="color: white;">Usuario: ${log.user} - Fecha: ${log.date}</div>
       </div>
     `;
   });
