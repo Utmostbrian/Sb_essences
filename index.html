@@ -123,6 +123,7 @@ html,body{height:100%;background:#000;font-family:var(--sans);}
 }
 .form-input:focus{border-color:var(--secondary);}
 .form-input::placeholder{color:var(--secondary);}
+textarea.form-input{resize:vertical;min-height:80px;}
 .forgot-link{
   font-size:10px;color:var(--secondary);text-align:right;
   width:100%;margin-bottom:20px;cursor:pointer;letter-spacing:.04em;
@@ -578,20 +579,21 @@ html,body{height:100%;background:#000;font-family:var(--sans);}
         <form id="loginForm">
           <div class="form-group">
             <label class="form-label">Correo electrónico</label>
-            <input type="email" class="form-input" placeholder="bserrudob@gmail.com" required>
+            <input type="email" class="form-input" placeholder="bserrudob@gmail.com">
           </div>
           <div class="form-group">
             <label class="form-label">Contraseña</label>
-            <input type="password" class="form-input" placeholder="••••••••" required>
+            <input type="password" class="form-input" placeholder="••••••••">
           </div>
           <div class="forgot-link" id="forgotLink">¿Olvidaste tu contraseña?</div>
-          <button type="submit" class="btn-primary">INGRESAR</button>
+          <button type="submit" class="btn-primary" id="loginBtn">INGRESAR</button>
           <div class="divider-row">
             <div class="divider-line"></div>
             <div class="divider-text">o</div>
             <div class="divider-line"></div>
           </div>
           <button type="button" class="btn-outline" id="registerBtn">CREAR CUENTA</button>
+          <button type="button" class="btn-outline" id="adminBtn" style="margin-top:10px;">INICIAR SESION COMO ADMINISTRADOR</button>
         </form>
       </div>
     </div>
@@ -955,6 +957,172 @@ html,body{height:100%;background:#000;font-family:var(--sans);}
       </div>
     </div>
 
+    <!-- ADMIN PAGE -->
+    <div class="page info-page" id="adminPage">
+      <div class="section-header">
+        <div class="section-title">Panel de Administrador</div>
+        <div class="section-link" id="adminBack">Volver</div>
+      </div>
+      <!-- Dashboard -->
+      <div id="dashboardContainer"></div>
+      <!-- Buttons -->
+      <div class="profile-card">
+        <div class="profile-name">Gestión de Productos</div>
+        <button class="btn-primary" id="addPerfumeBtn" style="margin:5px;">Agregar Perfume</button>
+        <button class="btn-primary" id="viewSalesBtn" style="margin:5px;">Ver Ventas</button>
+        <button class="btn-primary" id="manageDiscountsBtn" style="margin:5px;">Gestionar Descuentos</button>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Gestión de Usuarios</div>
+        <button class="btn-primary" id="manageUsersBtn" style="margin:5px;">Gestionar Usuarios</button>
+        <button class="btn-primary" id="createUserBtn" style="margin:5px;">Crear Nuevo Usuario</button>
+        <button class="btn-primary" id="viewLogsBtn" style="margin:5px;">Ver Logs</button>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Noticias</div>
+        <button class="btn-primary" id="addNewsBtn" style="margin:5px;">Agregar Noticia</button>
+      </div>
+    </div>
+
+    <!-- ADD PERFUME FORM -->
+    <div class="page info-page" id="addPerfumePage">
+      <div class="section-header">
+        <div class="section-title">Agregar Perfume</div>
+        <div class="section-link" id="addPerfumeBack">Volver</div>
+      </div>
+      <form id="addPerfumeForm" style="padding:20px;">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-input" id="perfumeName" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Marca</label>
+          <input type="text" class="form-input" id="perfumeBrand" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Precio</label>
+          <input type="number" class="form-input" id="perfumePrice" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoría</label>
+          <select class="form-input" id="perfumeCategory" required>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="unisex">Unisex</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Imagen (src/)</label>
+          <input type="text" class="form-input" id="perfumeImg" placeholder="e.g. club_nuit.png" required>
+        </div>
+        <button type="submit" class="btn-primary">Agregar Perfume</button>
+      </form>
+    </div>
+
+    <!-- SALES PAGE -->
+    <div class="page info-page" id="salesPage">
+      <div class="section-header">
+        <div class="section-title">Ventas por Producto</div>
+        <div class="section-link" id="salesBack">Volver</div>
+      </div>
+      <div id="salesList" style="padding:20px;"></div>
+    </div>
+
+    <!-- DISCOUNTS PAGE -->
+    <div class="page info-page" id="discountsPage">
+      <div class="section-header">
+        <div class="section-title">Gestionar Descuentos</div>
+        <div class="section-link" id="discountsBack">Volver</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Agregar Descuento</div>
+        <form id="addDiscountForm" style="margin-top:10px;">
+          <div class="form-group">
+            <label class="form-label">Producto</label>
+            <select class="form-input" id="discountProduct" required>
+              <!-- Options will be populated by JS -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Porcentaje de Descuento</label>
+            <input type="number" class="form-input" id="discountPercent" min="0" max="100" required>
+          </div>
+          <button type="submit" class="btn-primary">Agregar Descuento</button>
+        </form>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Productos con Descuento</div>
+        <div id="discountsList" style="margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <!-- NEWS PAGE -->
+    <div class="page info-page" id="newsPage">
+      <div class="section-header">
+        <div class="section-title">Agregar Noticia</div>
+        <div class="section-link" id="newsBack">Volver</div>
+      </div>
+      <form id="addNewsForm" style="padding:20px;">
+        <div class="form-group">
+          <label class="form-label">Título</label>
+          <input type="text" class="form-input" id="newsTitle" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contenido</label>
+          <textarea class="form-input" id="newsContent" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Agregar Noticia</button>
+      </form>
+      <div class="profile-card">
+        <div class="profile-name">Noticias Agregadas</div>
+        <div id="newsList" style="margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <!-- MANAGE USERS PAGE -->
+    <div class="page info-page" id="manageUsersPage">
+      <div class="section-header">
+        <div class="section-title">Gestionar Usuarios</div>
+        <div class="section-link" id="manageUsersBack">Volver</div>
+      </div>
+      <div id="usersList"></div>
+    </div>
+
+    <!-- CREATE USER PAGE -->
+    <div class="page info-page" id="createUserPage">
+      <div class="section-header">
+        <div class="section-title">Crear Nuevo Usuario</div>
+        <div class="section-link" id="createUserBack">Volver</div>
+      </div>
+      <form id="createUserForm" style="padding:20px;">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-input" id="userName" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo</label>
+          <input type="email" class="form-input" id="userEmail" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rol</label>
+          <select class="form-input" id="userRole" required>
+            <option value="client">Cliente</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary">Crear Usuario</button>
+      </form>
+    </div>
+
+    <!-- LOGS PAGE -->
+    <div class="page info-page" id="logsPage">
+      <div class="section-header">
+        <div class="section-title">Logs de Usuarios</div>
+        <div class="section-link" id="logsBack">Volver</div>
+      </div>
+      <div id="logsList" style="padding:20px;"></div>
+    </div>
+
   </div>
 
   <!-- BOTTOM NAV -->
@@ -1079,6 +1247,28 @@ let products = [
   }
 ];
 
+// Admin data
+let sales = JSON.parse(localStorage.getItem('sales')) || [
+  { id: 1, sold: 15 },
+  { id: 2, sold: 10 },
+  { id: 3, sold: 8 },
+  { id: 4, sold: 12 },
+  { id: 5, sold: 6 },
+  { id: 7, sold: 9 }
+];
+let discounts = JSON.parse(localStorage.getItem('discounts')) || [];
+let news = JSON.parse(localStorage.getItem('news')) || [];
+
+// Admin data
+let users = JSON.parse(localStorage.getItem('users')) || [
+  { id: 1, name: 'Admin', email: 'admin@sbessence.com', role: 'admin' },
+  { id: 2, name: 'Cliente', email: 'cliente@example.com', role: 'client' }
+];
+let userLogs = JSON.parse(localStorage.getItem('userLogs')) || [
+  { id: 1, action: 'Login', user: 'Admin', date: new Date().toLocaleDateString() },
+  { id: 2, action: 'Added product', user: 'Admin', date: new Date().toLocaleDateString() }
+];
+
 // DOM elements
 const appShell = document.getElementById('appShell');
 const screen = document.getElementById('screen');
@@ -1119,7 +1309,7 @@ function navigateTo(page) {
     item.classList.toggle('active', item.dataset.page === page);
   });
 
-  if (page === 'login') {
+  if (page === 'login' || page === 'admin') {
     topNav.style.display = 'none';
     bottomNav.style.display = 'none';
   } else {
@@ -1131,14 +1321,55 @@ function navigateTo(page) {
   if (page === 'catalog') {
     renderProducts('all', 'catalogGrid');
   }
-  if (page === 'home') {
-    renderProducts('all', 'productGrid');
+  if (page === 'admin') {
+    renderDashboard();
   }
 }
 
 function showOccasionCatalog(occasion) {
   navigateTo('catalog');
   renderProducts('all', 'catalogGrid', occasion);
+}
+
+// Admin functions
+function renderDashboard() {
+  const container = document.getElementById('dashboardContainer');
+  // Example invented values
+  const totalSales = 247;
+  const topProductName = 'Club de Nuit Intense Man';
+  const topProductSold = 45;
+  const totalRevenue = 18560.50;
+  const numUsers = 128;
+  const numAdmins = 5;
+  const numClients = 123;
+  const numProducts = 12;
+  const numDiscounts = 3;
+  container.innerHTML = `
+    <div class="profile-card" style="margin-bottom:10px;">
+      <div class="profile-name" style="color: white;">Ventas Totales</div>
+      <div class="profile-sub" style="color: white;">${totalSales} unidades vendidas</div>
+    </div>
+    <div class="profile-card" style="margin-bottom:10px;">
+      <div class="profile-name" style="color: white;">Producto Más Vendido</div>
+      <div class="profile-sub" style="color: white;">${topProductName} (${topProductSold} unidades)</div>
+    </div>
+    <div class="profile-card" style="margin-bottom:10px;">
+      <div class="profile-name" style="color: white;">Ingresos Totales</div>
+      <div class="profile-sub" style="color: white;">${totalRevenue.toFixed(2)} Bs</div>
+    </div>
+    <div class="profile-card" style="margin-bottom:10px;">
+      <div class="profile-name" style="color: white;">Usuarios Registrados</div>
+      <div class="profile-sub" style="color: white;">${numUsers} total (${numAdmins} admins, ${numClients} clientes)</div>
+    </div>
+    <div class="profile-card" style="margin-bottom:10px;">
+      <div class="profile-name" style="color: white;">Productos en Catálogo</div>
+      <div class="profile-sub" style="color: white;">${numProducts} perfumes disponibles</div>
+    </div>
+    <div class="profile-card" style="margin-bottom:10px;">
+      <div class="profile-name" style="color: white;">Descuentos Activos</div>
+      <div class="profile-sub" style="color: white;">${numDiscounts} productos con descuento</div>
+    </div>
+  `;
 }
 
 // Product rendering
@@ -1389,6 +1620,10 @@ document.getElementById('registerBtn').addEventListener('click', () => {
   navigateTo('register');
 });
 
+document.getElementById('adminBtn').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
 document.getElementById('forgotLink').addEventListener('click', () => {
   navigateTo('forgot');
 });
@@ -1529,6 +1764,238 @@ document.getElementById('addressFormEl').addEventListener('submit', (e) => {
     saveAddress(address, city, phone);
   }
 });
+
+// Admin event listeners
+document.getElementById('adminBack').addEventListener('click', () => {
+  navigateTo('login');
+});
+
+document.getElementById('addPerfumeBtn').addEventListener('click', () => {
+  navigateTo('addPerfume');
+});
+
+document.getElementById('viewSalesBtn').addEventListener('click', () => {
+  navigateTo('sales');
+  renderSales();
+});
+
+document.getElementById('manageDiscountsBtn').addEventListener('click', () => {
+  navigateTo('discounts');
+  renderDiscounts();
+});
+
+document.getElementById('addNewsBtn').addEventListener('click', () => {
+  navigateTo('news');
+  renderNews();
+});
+
+document.getElementById('addPerfumeBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('salesBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('discountsBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('newsBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('addPerfumeForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('perfumeName').value;
+  const brand = document.getElementById('perfumeBrand').value;
+  const price = parseFloat(document.getElementById('perfumePrice').value);
+  const category = document.getElementById('perfumeCategory').value;
+  const img = 'src/' + document.getElementById('perfumeImg').value;
+  
+  const newProduct = {
+    id: products.length + 1,
+    name,
+    brand,
+    price,
+    category,
+    img,
+    sizes: ['50ml', '100ml'],
+    occasions: ['work', 'special'],
+    notes: { top: [], heart: [], base: [] }
+  };
+  products.push(newProduct);
+  sales.push({ id: newProduct.id, sold: 0 });
+  localStorage.setItem('sales', JSON.stringify(sales));
+  showToast('Perfume agregado');
+  navigateTo('admin');
+});
+
+document.getElementById('addDiscountForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const productId = parseInt(document.getElementById('discountProduct').value);
+  const percent = parseInt(document.getElementById('discountPercent').value);
+  
+  const existing = discounts.find(d => d.productId === productId);
+  if (existing) {
+    existing.percent = percent;
+  } else {
+    discounts.push({ productId, percent });
+  }
+  localStorage.setItem('discounts', JSON.stringify(discounts));
+  showToast('Descuento agregado');
+  renderDiscounts();
+});
+
+document.getElementById('addNewsForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const title = document.getElementById('newsTitle').value;
+  const content = document.getElementById('newsContent').value;
+  
+  news.push({ title, content, date: new Date().toLocaleDateString() });
+  localStorage.setItem('news', JSON.stringify(news));
+  showToast('Noticia agregada');
+  renderNews();
+});
+
+// User management event listeners
+document.getElementById('manageUsersBtn').addEventListener('click', () => {
+  navigateTo('manageUsers');
+  renderUsers();
+});
+
+document.getElementById('createUserBtn').addEventListener('click', () => {
+  navigateTo('createUser');
+});
+
+document.getElementById('viewLogsBtn').addEventListener('click', () => {
+  navigateTo('logs');
+  renderLogs();
+});
+
+document.getElementById('manageUsersBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('createUserBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('logsBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('createUserForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('userName').value;
+  const email = document.getElementById('userEmail').value;
+  const role = document.getElementById('userRole').value;
+  
+  const newUser = { id: users.length + 1, name, email, role };
+  users.push(newUser);
+  localStorage.setItem('users', JSON.stringify(users));
+  showToast('Usuario creado');
+  navigateTo('manageUsers');
+  renderUsers();
+});
+
+// Admin functions
+function renderSales() {
+  const salesList = document.getElementById('salesList');
+  salesList.innerHTML = '';
+  products.forEach(product => {
+    const sale = sales.find(s => s.id === product.id);
+    const sold = sale ? sale.sold : 0;
+    salesList.innerHTML += `
+      <div class="profile-card" style="margin-bottom:10px;">
+        <div class="profile-name">${product.name}</div>
+        <div class="profile-sub">Ventas: ${sold}</div>
+      </div>
+    `;
+  });
+}
+
+function renderDiscounts() {
+  const discountsList = document.getElementById('discountsList');
+  const discountProduct = document.getElementById('discountProduct');
+  discountProduct.innerHTML = '<option value="">Seleccionar producto</option>';
+  products.forEach(product => {
+    discountProduct.innerHTML += `<option value="${product.id}">${product.name}</option>`;
+  });
+  
+  discountsList.innerHTML = '';
+  discounts.forEach(discount => {
+    const product = products.find(p => p.id === discount.productId);
+    if (product) {
+      discountsList.innerHTML += `
+        <div class="profile-card" style="margin-bottom:10px;">
+          <div class="profile-name">${product.name}</div>
+          <div class="profile-sub">Descuento: ${discount.percent}%</div>
+        </div>
+      `;
+    }
+  });
+}
+
+function renderNews() {
+  const newsList = document.getElementById('newsList');
+  newsList.innerHTML = '';
+  news.forEach(item => {
+    newsList.innerHTML += `
+      <div class="profile-card" style="margin-bottom:10px;">
+        <div class="profile-name">${item.title}</div>
+        <div class="profile-sub">${item.content} - ${item.date}</div>
+      </div>
+    `;
+  });
+}
+
+// User management functions
+function renderUsers() {
+  const usersList = document.getElementById('usersList');
+  usersList.innerHTML = '';
+  users.forEach(user => {
+    usersList.innerHTML += `
+      <div class="profile-card" style="margin-bottom:10px;">
+        <div class="profile-name">${user.name} (${user.role})</div>
+        <div class="profile-sub">${user.email}</div>
+        <button class="btn-primary" onclick="editUser(${user.id})" style="margin:5px;">Editar</button>
+        <button class="btn-primary" onclick="deleteUser(${user.id})" style="margin:5px;">Eliminar</button>
+      </div>
+    `;
+  });
+}
+
+function editUser(id) {
+  const user = users.find(u => u.id === id);
+  const newName = prompt('Nuevo nombre:', user.name);
+  if (newName) {
+    user.name = newName;
+    localStorage.setItem('users', JSON.stringify(users));
+    renderUsers();
+    showToast('Usuario actualizado');
+  }
+}
+
+function deleteUser(id) {
+  users = users.filter(u => u.id !== id);
+  localStorage.setItem('users', JSON.stringify(users));
+  renderUsers();
+  showToast('Usuario eliminado');
+}
+
+function renderLogs() {
+  const logsList = document.getElementById('logsList');
+  logsList.innerHTML = '';
+  userLogs.forEach(log => {
+    logsList.innerHTML += `
+      <div class="profile-card" style="margin-bottom:10px;">
+        <div class="profile-name">${log.action}</div>
+        <div class="profile-sub">Usuario: ${log.user} - Fecha: ${log.date}</div>
+      </div>
+    `;
+  });
+}
 </script>
 
 </body>
