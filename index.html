@@ -594,6 +594,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
           <button type="button" class="btn-outline" id="registerBtn">CREAR CUENTA</button>
           <button type="button" class="btn-outline" id="adminBtn" style="margin-top:10px;">INICIAR SESION COMO ADMINISTRADOR</button>
+          <button type="button" class="btn-outline" id="guestBtn" style="margin-top:10px;">ENTRAR COMO INVITADO</button>
         </form>
       </div>
     </div>
@@ -1622,6 +1623,10 @@ document.getElementById('registerBtn').addEventListener('click', () => {
 
 document.getElementById('adminBtn').addEventListener('click', () => {
   navigateTo('admin');
+});
+
+document.getElementById('guestBtn').addEventListener('click', () => {
+  navigateTo('home');
 });
 
 document.getElementById('forgotLink').addEventListener('click', () => {
