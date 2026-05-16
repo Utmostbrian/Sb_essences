@@ -527,6 +527,10 @@ textarea.form-input{resize:vertical;min-height:80px;}
   font-family:var(--sans);white-space:nowrap;
 }
 .toast.show{opacity:1;}
+/* Charts */
+.profile-card canvas{display:block;width:100%;}
+.chart-wrapper{width:100%;}
+.profile-card canvas{max-height:120px;}
 </style>
 </head>
 <body>
@@ -1166,6 +1170,8 @@ textarea.form-input{resize:vertical;min-height:80px;}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 // App state
 let currentPage = 'login';
@@ -1270,6 +1276,9 @@ let userLogs = JSON.parse(localStorage.getItem('userLogs')) || [
   { id: 2, action: 'Added product', user: 'Admin', date: new Date().toLocaleDateString() }
 ];
 
+// Chart instances storage
+let dashboardCharts = {};
+
 // DOM elements
 const appShell = document.getElementById('appShell');
 const screen = document.getElementById('screen');
@@ -1336,41 +1345,139 @@ function showOccasionCatalog(occasion) {
 function renderDashboard() {
   const container = document.getElementById('dashboardContainer');
   // Example invented values
-  const totalSales = 247;
-  const topProductName = 'Club de Nuit Intense Man';
-  const topProductSold = 45;
-  const totalRevenue = 18560.50;
-  const numUsers = 128;
-  const numAdmins = 5;
-  const numClients = 123;
-  const numProducts = 12;
-  const numDiscounts = 3;
+  // Prepare metrics from current data
+  const soldByProduct = products.map(p => {
+    const s = sales.find(x => x.id === p.id);
+    return { name: p.name, sold: s ? s.sold : 0, revenue: (s ? s.sold : 0) * p.price };
+  });
+
+  const totalSales = soldByProduct.reduce((sum, p) => sum + p.sold, 0);
+  const totalRevenue = soldByProduct.reduce((sum, p) => sum + p.revenue, 0);
+  const numUsers = users.length;
+  const numAdmins = users.filter(u => u.role === 'admin').length;
+  const numClients = users.filter(u => u.role === 'client').length;
+  const numProducts = products.length;
+  const numDiscounts = discounts.length;
+
+  // Build dashboard HTML with canvases for charts
+  // Build dashboard using current (simulated) data and show numeric summaries
+  // Compute top products for numeric display
+  const topProducts = soldByProduct.slice().sort((a,b) => b.sold - a.sold).slice(0,3);
+
   container.innerHTML = `
-    <div class="profile-card" style="margin-bottom:10px;">
-      <div class="profile-name" style="color: white;">Ventas Totales</div>
-      <div class="profile-sub" style="color: white;">${totalSales} unidades vendidas</div>
+    <div class="profile-card" style="margin-bottom:10px;padding-bottom:6px;">
+      <div class="profile-name" style="color: white;">Resumen</div>
+      <div class="profile-sub" style="color: white;">${totalSales} unidades vendidas • ${totalRevenue.toFixed(2)} Bs</div>
     </div>
-    <div class="profile-card" style="margin-bottom:10px;">
-      <div class="profile-name" style="color: white;">Producto Más Vendido</div>
-      <div class="profile-sub" style="color: white;">${topProductName} (${topProductSold} unidades)</div>
+
+    <div class="profile-card" style="margin-bottom:12px;">
+      <div class="profile-name" style="color: white;">Ventas por Producto</div>
+      <canvas id="chartSales" style="width:100%;height:100px;margin-top:8px;"></canvas>
+      <div class="profile-sub" style="color: white;margin-top:6px;">
+        ${topProducts.map(p => `${p.name}: ${p.sold}`).join(' • ')}
+      </div>
     </div>
-    <div class="profile-card" style="margin-bottom:10px;">
-      <div class="profile-name" style="color: white;">Ingresos Totales</div>
-      <div class="profile-sub" style="color: white;">${totalRevenue.toFixed(2)} Bs</div>
+
+    <div class="profile-card" style="margin-bottom:12px;">
+      <div class="profile-name" style="color: white;">Ingresos por Producto</div>
+      <canvas id="chartRevenue" style="width:100%;height:100px;margin-top:8px;"></canvas>
+      <div class="profile-sub" style="color: white;margin-top:6px;">
+        ${topProducts.map(p => `${p.name}: ${ (p.revenue).toFixed(2)} Bs`).join(' • ')}
+      </div>
     </div>
-    <div class="profile-card" style="margin-bottom:10px;">
-      <div class="profile-name" style="color: white;">Usuarios Registrados</div>
-      <div class="profile-sub" style="color: white;">${numUsers} total (${numAdmins} admins, ${numClients} clientes)</div>
-    </div>
-    <div class="profile-card" style="margin-bottom:10px;">
-      <div class="profile-name" style="color: white;">Productos en Catálogo</div>
-      <div class="profile-sub" style="color: white;">${numProducts} perfumes disponibles</div>
-    </div>
-    <div class="profile-card" style="margin-bottom:10px;">
-      <div class="profile-name" style="color: white;">Descuentos Activos</div>
-      <div class="profile-sub" style="color: white;">${numDiscounts} productos con descuento</div>
+
+    <div class="profile-card" style="margin-bottom:12px;">
+      <div class="profile-name" style="color: white;">Distribución de Usuarios</div>
+      <canvas id="chartUsers" style="width:100%;height:80px;margin-top:8px;"></canvas>
+      <div class="profile-sub" style="color: white;margin-top:6px;">Admins: ${numAdmins} • Clientes: ${numClients} • Otros: ${Math.max(0, numUsers - numAdmins - numClients)}</div>
     </div>
   `;
+
+  // Use aggregated simulated data from products/sales
+  const labels = soldByProduct.map(p => p.name);
+  const soldData = soldByProduct.map(p => p.sold);
+  const revenueData = soldByProduct.map(p => p.revenue);
+  const sampleUsers = [numAdmins, numClients, Math.max(0, numUsers - numAdmins - numClients)];
+
+  // Helper to shorten long labels for axis while keeping full name in tooltip
+  const truncateLabel = (label, max = 18) => {
+    if (typeof label !== 'string') return label;
+    return label.length > max ? label.slice(0, max - 1) + '…' : label;
+  };
+
+  // Destroy previous charts if any
+  try { if (dashboardCharts.sales) dashboardCharts.sales.destroy(); } catch(e){}
+  try { if (dashboardCharts.revenue) dashboardCharts.revenue.destroy(); } catch(e){}
+  try { if (dashboardCharts.users) dashboardCharts.users.destroy(); } catch(e){}
+  // Helper: initialize canvas for high-DPI and set height (smaller for mobile)
+  function prepareCanvas(id, heightPx) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return null;
+    // Set CSS height so layout reserves space
+    canvas.style.height = heightPx + 'px';
+    // Resize backing store for devicePixelRatio
+    const ratio = window.devicePixelRatio || 1;
+    const width = canvas.clientWidth;
+    canvas.width = Math.floor(width * ratio);
+    canvas.height = Math.floor(heightPx * ratio);
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    return ctx;
+  }
+
+  // Limit x ticks on small screens
+  const maxTicks = Math.max(3, Math.floor(window.innerWidth / 90));
+
+  // Create Sales bar chart (smaller height on mobile)
+  const ctxSales = prepareCanvas('chartSales', 120);
+  if (ctxSales) {
+    dashboardCharts.sales = new Chart(ctxSales, {
+      type: 'bar',
+      data: { labels, datasets: [{ label: 'Unidades vendidas', data: soldData, backgroundColor: 'rgba(255,255,255,0.12)', borderColor: 'rgba(255,255,255,0.6)', borderWidth: 1 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.5,
+        plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+        scales: {
+          x: { ticks: { color: 'rgba(255,255,255,0.9)', autoSkip: true, maxTicksLimit: maxTicks, font: { size: 10 }, maxRotation: 0, minRotation: 0, callback: function(value, index){ return truncateLabel(labels[index]); } }, grid: { display: false } },
+          y: { beginAtZero: true, ticks: { color: 'rgba(255,255,255,0.9)', font: { size: 10 } } }
+        },
+        plugins: { tooltip: { callbacks: { title: function(context){ const i = context[0].dataIndex; return labels[i]; } } } }
+      }
+    });
+  }
+
+  // Create Revenue line chart
+  const ctxRevenue = prepareCanvas('chartRevenue', 120);
+  if (ctxRevenue) {
+    // Render revenue as bar chart to match visual style of sales
+    dashboardCharts.revenue = new Chart(ctxRevenue, {
+      type: 'bar',
+      data: { labels, datasets: [{ label: 'Ingresos (Bs)', data: revenueData, backgroundColor: 'rgba(255,205,86,0.12)', borderColor: 'rgba(255,205,86,0.95)', borderWidth: 1 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.5,
+        plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+        scales: {
+          x: { ticks: { color: 'rgba(255,255,255,0.9)', autoSkip: true, maxTicksLimit: maxTicks, font: { size: 10 }, maxRotation: 0, minRotation: 0, callback: function(value, index){ return truncateLabel(labels[index]); } }, grid: { display: false } },
+          y: { beginAtZero: true, ticks: { color: 'rgba(255,255,255,0.9)', font: { size: 10 } } }
+        },
+        plugins: { tooltip: { callbacks: { title: function(context){ const i = context[0].dataIndex; return labels[i]; } } } }
+      }
+    });
+  }
+
+  // Create Users pie chart
+  const ctxUsers = prepareCanvas('chartUsers', 100);
+  if (ctxUsers) {
+    dashboardCharts.users = new Chart(ctxUsers, {
+      type: 'pie',
+      data: { labels: ['Admins', 'Clientes', 'Otros'], datasets: [{ data: sampleUsers, backgroundColor: ['rgba(255,99,132,0.9)', 'rgba(54,162,235,0.9)', 'rgba(201,203,207,0.9)'] }] },
+      options: { responsive: true, maintainAspectRatio: true, aspectRatio: 2, plugins: { legend: { labels: { color: 'rgba(255,255,255,0.9)', font: { size: 11 } } } } }
+    });
+  }
 }
 
 // Product rendering
