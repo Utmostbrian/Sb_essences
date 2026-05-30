@@ -201,6 +201,16 @@ textarea.form-input{resize:vertical;min-height:80px;}
   overflow-x:auto;scrollbar-width:none;
 }
 .cards-scroll::-webkit-scrollbar{display:none;}
+.sector-group-section{
+  margin-bottom:20px;
+}
+.sector-group-title{
+  font-family:var(--serif);font-size:13px;color:var(--primary);
+  padding:0 18px 8px;
+}
+.sector-group-section .cards-scroll{
+  padding:0 18px 20px;
+}
 .product-card{
   min-width:135px;background:var(--surface);border:0.5px solid var(--border);
   border-radius:8px;overflow:hidden;flex-shrink:0;cursor:pointer;
@@ -213,6 +223,13 @@ textarea.form-input{resize:vertical;min-height:80px;}
 }
 .product-card-img img{max-width:100%;max-height:95px;object-fit:contain;}
 .product-card-body{padding:10px 10px 12px;}
+.product-card-sector{
+  display:inline-block;padding:4px 8px;
+  margin-bottom:8px;font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;border-radius:999px;
+  background:rgba(255,255,255,0.08);color:var(--primary);
+  border:0.5px solid rgba(255,255,255,0.12);
+}
 .product-card-brand{
   font-size:8px;letter-spacing:.22em;color:var(--secondary);
   text-transform:uppercase;margin-bottom:2px;
@@ -275,6 +292,13 @@ textarea.form-input{resize:vertical;min-height:80px;}
 .detail-brand{
   font-size:9px;letter-spacing:.3em;color:var(--secondary);
   text-transform:uppercase;margin-bottom:4px;
+}
+.detail-sector{
+  display:inline-flex;align-items:center;
+  padding:6px 10px;margin-bottom:10px;
+  color:var(--primary);background:rgba(255,255,255,.06);
+  border:0.5px solid rgba(255,255,255,.12);border-radius:999px;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
 }
 .detail-name{
   font-family:var(--serif);font-size:26px;font-weight:400;
@@ -516,6 +540,89 @@ textarea.form-input{resize:vertical;min-height:80px;}
 .theme-toggle-track.on .theme-toggle-thumb{transform:translateX(20px);}
 [data-theme="light"] .theme-toggle-thumb{background:#000;}
 
+.settings-field{
+  padding:16px 18px;border-top:0.5px solid var(--border);display:grid;gap:10px;
+}
+.settings-label{
+  font-size:10px;letter-spacing:.2em;color:var(--secondary);
+  text-transform:uppercase;margin-bottom:6px;
+}
+.settings-control{
+  display:flex;flex-direction:column;gap:10px;
+}
+.settings-select,
+.settings-toggle{
+  width:100%;font-family:var(--sans);font-size:12px;
+  background:var(--surface);color:var(--primary);
+  border:0.5px solid var(--border2);border-radius:8px;
+  padding:12px 14px;outline:none;
+}
+.settings-toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:14px 16px;background:var(--surface);
+  border:0.5px solid var(--border2);border-radius:10px;
+}
+.settings-toggle-text{
+  display:flex;flex-direction:column;gap:3px;
+}
+.settings-toggle-title{font-size:12px;color:var(--primary);}
+.settings-toggle-sub{font-size:10px;color:var(--secondary);line-height:1.4;}
+.settings-switch{
+  width:40px;height:22px;border-radius:999px;
+  background:var(--elevated);position:relative;cursor:pointer;
+  border:0.5px solid var(--border2);
+}
+.settings-switch.on{background:var(--primary);}
+.settings-switch-thumb{
+  width:18px;height:18px;background:#fff;border-radius:50%;
+  position:absolute;top:2px;left:2px;transition:transform .2s;
+}
+.settings-switch.on .settings-switch-thumb{transform:translateX(18px);}
+
+.admin-toolbar{
+  position:relative;
+  display:flex;
+  justify-content:flex-end;
+  padding:0 18px 14px;
+}
+.summary-filter-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 14px;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;border:0.5px solid var(--border2);
+  background:var(--surface);color:var(--primary);border-radius:8px;
+  cursor:pointer;transition:background .2s,border-color .2s,transform .2s;
+}
+.summary-filter-btn:hover{background:rgba(255,255,255,.06);}
+.summary-filter-btn svg{width:14px;height:14px;stroke:currentColor;}
+.summary-dropdown{
+  position:absolute;top:100%;right:0;
+  width:260px;background:var(--surface);
+  border:0.5px solid var(--border2);border-radius:12px;
+  padding:12px;box-shadow:0 18px 40px rgba(0,0,0,.3);
+  z-index:11;display:none;
+}
+.summary-dropdown.open{display:block;}
+.summary-dropdown-title{
+  font-size:9px;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--secondary);margin-bottom:8px;
+}
+.summary-list{display:grid;gap:8px;}
+.summary-item{
+  background:var(--elevated);border:0.5px solid var(--border2);
+  border-radius:8px;padding:12px;cursor:pointer;
+  transition:background .2s,border-color .2s;
+}
+.summary-item:hover{background:rgba(255,255,255,.05);}
+.summary-item.active{border-color:var(--primary);background:rgba(255,255,255,.1);}
+.summary-item-label{font-size:11px;color:var(--primary);margin-bottom:4px;}
+.summary-item-sub{font-size:10px;color:var(--secondary);line-height:1.4;}
+.summary-quarter-list{margin-top:8px;display:grid;gap:6px;padding-left:8px;}
+.summary-quarter-list[aria-hidden="true"]{display:none;}
+.summary-quarter{background:rgba(255,255,255,.04);border:0.5px solid var(--border2);
+  border-radius:8px;padding:10px;font-size:10px;color:var(--secondary);text-align:left;}
+.summary-card{margin:0 18px 12px;background:rgba(255,255,255,.04);border:0.5px solid var(--border2);border-radius:10px;padding:14px;}
+.summary-card .profile-name{margin-bottom:6px;}
+
 /* ═══════════════════════════════════════════
    TOAST
 ═══════════════════════════════════════════ */
@@ -724,6 +831,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
       <div class="detail-info">
         <div class="detail-brand" id="detailBrand"></div>
+        <div class="detail-sector" id="detailSector"></div>
         <div class="detail-name" id="detailName"></div>
         <div class="detail-desc" id="detailDesc"></div>
 
@@ -960,6 +1068,35 @@ textarea.form-input{resize:vertical;min-height:80px;}
         <div class="profile-name">Ajustes de la app</div>
         <div class="profile-sub">Configura tema y preferencias de tu cuenta.</div>
       </div>
+      <div class="settings-field">
+        <div class="settings-control">
+          <div class="settings-label">Método de pago predeterminado</div>
+          <select class="settings-select" id="paymentMethodSelect">
+            <option value="card">Tarjeta de crédito</option>
+            <option value="efectivo">Efectivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="settings-field">
+        <div class="settings-toggle-row" id="notificationsToggle">
+          <div class="settings-toggle-text">
+            <div class="settings-toggle-title">Notificaciones</div>
+            <div class="settings-toggle-sub">Recibe novedades y ofertas especiales.</div>
+          </div>
+          <div class="settings-switch" id="notificationsSwitch">
+            <div class="settings-switch-thumb"></div>
+          </div>
+        </div>
+        <div class="settings-toggle-row" id="offersToggle">
+          <div class="settings-toggle-text">
+            <div class="settings-toggle-title">Ofertas personalizadas</div>
+            <div class="settings-toggle-sub">Mostrar recomendaciones adaptadas a tu estilo.</div>
+          </div>
+          <div class="settings-switch" id="offersSwitch">
+            <div class="settings-switch-thumb"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ADMIN PAGE -->
@@ -967,6 +1104,20 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="section-header">
         <div class="section-title">Panel de Administrador</div>
         <div class="section-link" id="adminBack">Volver</div>
+      </div>
+      <div class="admin-toolbar">
+        <button class="btn-outline summary-filter-btn" id="summaryByDateBtn" type="button">
+          Resumen por fechas
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"></path></svg>
+        </button>
+        <div class="summary-dropdown" id="summaryDropdown" aria-hidden="true">
+          <div class="summary-dropdown-title">Selecciona un año</div>
+          <div class="summary-list" id="summaryYearList"></div>
+        </div>
+      </div>
+      <div class="profile-card summary-card" id="summaryCard" style="display:none;">
+        <div class="profile-name" id="summaryCardTitle">Resumen por fechas</div>
+        <div class="profile-sub" id="summaryCardText">Selecciona un año y luego un trimestre para ver el resultado.</div>
       </div>
       <!-- Dashboard -->
       <div id="dashboardContainer"></div>
@@ -1184,6 +1335,12 @@ let profileData = JSON.parse(localStorage.getItem('profileData')) || {
   city: '',
   phone: ''
 };
+let settingsData = JSON.parse(localStorage.getItem('settingsData')) || {
+  defaultPayment: 'card',
+  notifications: true,
+  customOffers: false
+};
+let settingsInitialized = false;
 let products = [
   {
     id: 1,
@@ -1191,6 +1348,7 @@ let products = [
     brand: 'Armaf',
     price: 89,
     category: 'masculino',
+    sector: 'adultos',
     img: 'src/club_nuit.png',
     sizes: ['50ml', '100ml'],
     occasions: ['work', 'special'],
@@ -1202,6 +1360,7 @@ let products = [
     brand: 'Armaf',
     price: 75,
     category: 'femenino',
+    sector: 'adultos',
     img: 'src/club_woman.png',
     sizes: ['50ml', '100ml'],
     occasions: ['romantic', 'special'],
@@ -1224,6 +1383,7 @@ let products = [
     brand: 'Afnan',
     price: 95,
     category: 'masculino',
+    sector: 'juvenil',
     img: 'src/9am.png',
     sizes: ['50ml', '100ml'],
     occasions: ['work', 'special'],
@@ -1235,6 +1395,7 @@ let products = [
     brand: 'Afnan',
     price: 85,
     category: 'masculino',
+    sector: 'adultos',
     img: 'src/9pm.png',
     sizes: ['50ml', '100ml'],
     occasions: ['romantic', 'special'],
@@ -1247,6 +1408,7 @@ let products = [
     brand: 'Lattafa',
     price: 70,
     category: 'femenino',
+    sector: 'juvenil',
     img: 'src/yara.png',
     sizes: ['50ml', '100ml'],
     occasions: ['romantic', 'special'],
@@ -1263,6 +1425,23 @@ let sales = JSON.parse(localStorage.getItem('sales')) || [
   { id: 5, sold: 6 },
   { id: 7, sold: 9 }
 ];
+let salesByDate = JSON.parse(localStorage.getItem('salesByDate')) || [
+  { year: 2024, quarters: [
+      { quarter: 'Q1', sold: 28, revenue: 2440 },
+      { quarter: 'Q2', sold: 35, revenue: 2895 },
+      { quarter: 'Q3', sold: 42, revenue: 3510 },
+      { quarter: 'Q4', sold: 51, revenue: 4260 }
+    ]
+  },
+  { year: 2025, quarters: [
+      { quarter: 'Q1', sold: 38, revenue: 3230 },
+      { quarter: 'Q2', sold: 44, revenue: 3740 },
+      { quarter: 'Q3', sold: 53, revenue: 4510 },
+      { quarter: 'Q4', sold: 60, revenue: 5100 }
+    ]
+  }
+];
+let summaryDropdownInitialized = false;
 let discounts = JSON.parse(localStorage.getItem('discounts')) || [];
 let news = JSON.parse(localStorage.getItem('news')) || [];
 
@@ -1293,6 +1472,8 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
   updateCartDisplay();
   loadProfileData();
+  loadSettings();
+  applyDefaultPaymentMethod();
 });
 
 // Theme functions
@@ -1331,8 +1512,12 @@ function navigateTo(page) {
   if (page === 'catalog') {
     renderProducts('all', 'catalogGrid');
   }
+  if (page === 'settings') {
+    loadSettings();
+  }
   if (page === 'admin') {
     renderDashboard();
+    closeSummaryDropdown();
   }
 }
 
@@ -1478,6 +1663,86 @@ function renderDashboard() {
       options: { responsive: true, maintainAspectRatio: true, aspectRatio: 2, plugins: { legend: { labels: { color: 'rgba(255,255,255,0.9)', font: { size: 11 } } } } }
     });
   }
+
+  initializeSummaryDropdown();
+}
+
+function formatCurrency(value) {
+  return `${value.toFixed(2)} Bs`;
+}
+
+function initializeSummaryDropdown() {
+  if (summaryDropdownInitialized) return;
+  summaryDropdownInitialized = true;
+
+  const dropdown = document.getElementById('summaryDropdown');
+  const yearList = document.getElementById('summaryYearList');
+  const summaryBtn = document.getElementById('summaryByDateBtn');
+  const summaryCard = document.getElementById('summaryCard');
+  const summaryCardTitle = document.getElementById('summaryCardTitle');
+  const summaryCardText = document.getElementById('summaryCardText');
+
+  if (!dropdown || !yearList || !summaryBtn || !summaryCard || !summaryCardTitle || !summaryCardText) return;
+
+  yearList.innerHTML = '';
+  salesByDate.forEach(yearBlock => {
+    const yearItem = document.createElement('div');
+    yearItem.className = 'summary-item';
+    yearItem.innerHTML = `
+      <div class="summary-item-label">${yearBlock.year}</div>
+      <div class="summary-item-sub">${yearBlock.quarters.reduce((sum, q) => sum + q.sold, 0)} unidades • ${formatCurrency(yearBlock.quarters.reduce((sum, q) => sum + q.revenue, 0))}</div>
+      <div class="summary-quarter-list" aria-hidden="true"></div>
+    `;
+
+    const quarterList = yearItem.querySelector('.summary-quarter-list');
+    yearBlock.quarters.forEach(quarter => {
+      const quarterItem = document.createElement('button');
+      quarterItem.type = 'button';
+      quarterItem.className = 'summary-quarter';
+      quarterItem.textContent = `${quarter.quarter}: ${quarter.sold} ventas • ${formatCurrency(quarter.revenue)}`;
+      quarterItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        summaryCard.style.display = 'block';
+        summaryCardTitle.textContent = `${yearBlock.year} • ${quarter.quarter}`;
+        summaryCardText.textContent = `Ventas: ${quarter.sold} unidades • Ingresos: ${formatCurrency(quarter.revenue)}`;
+        document.querySelectorAll('.summary-item').forEach(item => item.classList.remove('active'));
+        yearItem.classList.add('active');
+        closeSummaryDropdown();
+      });
+      quarterList.appendChild(quarterItem);
+    });
+
+    yearItem.addEventListener('click', () => {
+      const alreadyOpen = yearItem.classList.contains('active');
+      document.querySelectorAll('.summary-item').forEach(item => item.classList.remove('active'));
+      document.querySelectorAll('.summary-quarter-list').forEach(list => list.setAttribute('aria-hidden', 'true'));
+      if (!alreadyOpen) {
+        yearItem.classList.add('active');
+        quarterList.setAttribute('aria-hidden', 'false');
+      }
+    });
+
+    yearList.appendChild(yearItem);
+  });
+
+  summaryBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('open');
+    dropdown.setAttribute('aria-hidden', dropdown.classList.contains('open') ? 'false' : 'true');
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!dropdown.contains(event.target) && event.target !== summaryBtn) {
+      closeSummaryDropdown();
+    }
+  });
+}
+
+function closeSummaryDropdown() {
+  const dropdown = document.getElementById('summaryDropdown');
+  if (!dropdown) return;
+  dropdown.classList.remove('open');
+  dropdown.setAttribute('aria-hidden', 'true');
 }
 
 // Product rendering
@@ -1493,6 +1758,47 @@ function renderProducts(category = 'all', containerId = 'productGrid', occasion 
   
   if (filtered.length === 0) {
     grid.innerHTML = '<div style="text-align:center;padding:28px;color:var(--secondary);">No hay perfumes para esta ocasión.</div>';
+    return;
+  }
+
+  const buildCard = (product) => {
+    const sectorLabel = product.sector ? `<div class="product-card-sector">${product.sector === 'infantil' ? 'Infantil' : product.sector === 'juvenil' ? 'Juvenil' : product.sector === 'adultos' ? 'Adultos' : 'General'}</div>` : '';
+    return `
+      <div class="product-card" onclick="showProductDetailById(${product.id})">
+        <div class="product-card-img">
+          <img src="${product.img}" alt="${product.name}">
+        </div>
+        <div class="product-card-body">
+          ${sectorLabel}
+          <div class="product-card-brand">${product.brand}</div>
+          <div class="product-card-name">${product.name}</div>
+          <div class="product-card-price">${product.price} Bs</div>
+        </div>
+      </div>
+    `;
+  };
+
+  if (filtered.some(product => product.sector)) {
+    const groups = filtered.reduce((acc, product) => {
+      const sector = product.sector || 'general';
+      if (!acc[sector]) acc[sector] = [];
+      acc[sector].push(product);
+      return acc;
+    }, {});
+
+    const sectorOrder = ['infantil', 'juvenil', 'adultos', 'general'];
+    Object.keys(groups).sort((a,b) => sectorOrder.indexOf(a) - sectorOrder.indexOf(b)).forEach(sector => {
+      const section = document.createElement('div');
+      section.className = 'sector-group-section';
+      const label = sector === 'infantil' ? 'Infantil' : sector === 'juvenil' ? 'Juvenil' : sector === 'adultos' ? 'Adultos' : 'General';
+      section.innerHTML = `
+        <div class="sector-group-title">Sector: ${label}</div>
+        <div class="cards-scroll">
+          ${groups[sector].map(buildCard).join('')}
+        </div>
+      `;
+      grid.appendChild(section);
+    });
     return;
   }
   
@@ -1516,10 +1822,19 @@ function renderProducts(category = 'all', containerId = 'productGrid', occasion 
   });
 }
 
+function showProductDetailById(id) {
+  const product = products.find(p => p.id === id);
+  if (product) showProductDetail(product);
+}
+
 // Product detail
 function showProductDetail(product) {
   document.getElementById('detailImg').src = product.img;
   document.getElementById('detailBrand').textContent = product.brand;
+  const sectorText = product.sector ? (product.sector === 'infantil' ? 'Infantil' : product.sector === 'juvenil' ? 'Juvenil' : product.sector === 'adultos' ? 'Adultos' : 'General') : '';
+  const sectorEl = document.getElementById('detailSector');
+  sectorEl.textContent = sectorText;
+  sectorEl.style.display = sectorText ? 'inline-flex' : 'none';
   document.getElementById('detailName').textContent = product.name;
   document.getElementById('detailDesc').textContent = 'Perfume premium de alta calidad con notas exclusivas.';
   document.getElementById('detailPrice').textContent = product.price + ' Bs';
@@ -1661,6 +1976,67 @@ function loadProfileData() {
     const addressDisplay = profileData.address + ', ' + profileData.city + ' • ' + profileData.phone;
     document.getElementById('addressText').textContent = addressDisplay;
   }
+}
+
+function loadSettings() {
+  const paymentMethodSelect = document.getElementById('paymentMethodSelect');
+  const notificationsSwitch = document.getElementById('notificationsSwitch');
+  const offersSwitch = document.getElementById('offersSwitch');
+
+  if (!paymentMethodSelect || !notificationsSwitch || !offersSwitch) return;
+
+  paymentMethodSelect.value = settingsData.defaultPayment;
+  notificationsSwitch.classList.toggle('on', settingsData.notifications);
+  offersSwitch.classList.toggle('on', settingsData.customOffers);
+
+  if (!settingsInitialized) {
+    settingsInitialized = true;
+
+    paymentMethodSelect.addEventListener('change', () => {
+      settingsData.defaultPayment = paymentMethodSelect.value;
+      localStorage.setItem('settingsData', JSON.stringify(settingsData));
+      applyDefaultPaymentMethod();
+      showToast('Método de pago predeterminado actualizado');
+    });
+
+    notificationsSwitch.addEventListener('click', () => {
+      settingsData.notifications = !settingsData.notifications;
+      localStorage.setItem('settingsData', JSON.stringify(settingsData));
+      notificationsSwitch.classList.toggle('on', settingsData.notifications);
+      showToast(settingsData.notifications ? 'Notificaciones activadas' : 'Notificaciones desactivadas');
+    });
+
+    offersSwitch.addEventListener('click', () => {
+      settingsData.customOffers = !settingsData.customOffers;
+      localStorage.setItem('settingsData', JSON.stringify(settingsData));
+      offersSwitch.classList.toggle('on', settingsData.customOffers);
+      showToast(settingsData.customOffers ? 'Ofertas personalizadas activadas' : 'Ofertas personalizadas desactivadas');
+    });
+  }
+
+  notificationsSwitch.addEventListener('click', () => {
+    settingsData.notifications = !settingsData.notifications;
+    localStorage.setItem('settingsData', JSON.stringify(settingsData));
+    notificationsSwitch.classList.toggle('on', settingsData.notifications);
+    showToast(settingsData.notifications ? 'Notificaciones activadas' : 'Notificaciones desactivadas');
+  });
+
+  offersSwitch.addEventListener('click', () => {
+    settingsData.customOffers = !settingsData.customOffers;
+    localStorage.setItem('settingsData', JSON.stringify(settingsData));
+    offersSwitch.classList.toggle('on', settingsData.customOffers);
+    showToast(settingsData.customOffers ? 'Ofertas personalizadas activadas' : 'Ofertas personalizadas desactivadas');
+  });
+}
+
+function applyDefaultPaymentMethod() {
+  const method = settingsData.defaultPayment;
+  document.querySelectorAll('.payment-method').forEach(m => {
+    const radio = m.querySelector('.pm-radio');
+    const isMatch = m.dataset.method === method;
+    m.classList.toggle('selected', isMatch);
+    radio.classList.toggle('on', isMatch);
+  });
 }
 
 function showAddressForm() {
