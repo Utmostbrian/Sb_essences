@@ -262,6 +262,55 @@ textarea.form-input{resize:vertical;min-height:80px;}
   box-shadow:0 12px 25px rgba(0,0,0,.07);
 }
 
+.profile-card{
+  margin:0 18px 12px;background:var(--surface);
+  border:0.5px solid var(--border);border-radius:10px;padding:16px;
+}
+.profile-sub{font-size:11px;line-height:1.5;color:var(--secondary);}
+.data-list{display:grid;gap:8px;margin-top:10px;}
+.data-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:10px 0;border-top:0.5px solid var(--border2);
+}
+.data-row:first-child{border-top:none;padding-top:0;}
+.data-label{font-size:12px;color:var(--primary);line-height:1.35;}
+.data-sub{font-size:10px;color:var(--secondary);line-height:1.45;margin-top:2px;}
+.data-value{
+  flex-shrink:0;font-family:var(--serif);font-size:17px;color:var(--primary);
+  text-align:right;
+}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.mini-stat{
+  background:var(--elevated);border:0.5px solid var(--border2);
+  border-radius:8px;padding:12px;
+}
+.mini-stat-label{
+  font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--secondary);margin-bottom:6px;
+}
+.mini-stat-value{font-family:var(--serif);font-size:20px;color:var(--primary);}
+.action-grid{display:grid;gap:10px;padding:0 18px 20px;}
+.search-mode-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 18px 12px;
+}
+.search-mode-btn{
+  background:var(--surface);color:var(--secondary);
+  border:0.5px solid var(--border2);border-radius:8px;
+  padding:10px;font-family:var(--sans);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+}
+.search-mode-btn.active{background:var(--primary);color:var(--bg);}
+.inline-filter{padding:0 18px 12px;display:grid;gap:8px;}
+.date-filter{padding:0 18px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.status-pill{
+  display:inline-flex;align-items:center;border:0.5px solid var(--border2);
+  border-radius:999px;padding:4px 8px;margin-top:6px;
+  font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--secondary);
+}
+.status-pill.done{border-color:rgba(255,255,255,.32);color:var(--primary);}
+.response-box{margin-top:10px;display:grid;gap:8px;}
+.response-box .btn-primary{margin-bottom:0;}
+
 /* GRID 2 COL */
 .cards-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:12px;
@@ -757,6 +806,43 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div class="recommendation-text">Opta por fragancias intensas y duraderas que destaquen tu estilo en celebraciones.</div>
         </div>
       </div>
+
+      <div class="section-header">
+        <div class="section-title">Actividad del sitio</div>
+        <div class="section-link" id="insightsLink">Ver todo</div>
+      </div>
+      <div class="recommendation-grid">
+        <div class="recommendation-card insight-card" data-insight="areas">
+          <div class="recommendation-label">Areas mas visitadas</div>
+          <div class="recommendation-text">Consulta que secciones del sitio tienen mas visitas.</div>
+        </div>
+        <div class="recommendation-card insight-card" data-insight="products">
+          <div class="recommendation-label">Productos mas visitados</div>
+          <div class="recommendation-text">Mira que fragancias despiertan mas interes.</div>
+        </div>
+        <div class="recommendation-card insight-card" data-insight="sales">
+          <div class="recommendation-label">Mas y menos vendidos</div>
+          <div class="recommendation-text">Compara los perfumes con mayor y menor salida.</div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">Encuestas y contacto</div>
+      </div>
+      <div class="recommendation-grid">
+        <div class="recommendation-card" id="siteSurveyLink">
+          <div class="recommendation-label">Encuesta del sitio</div>
+          <div class="recommendation-text">Evalua el diseno, desempeno y facilidad de uso.</div>
+        </div>
+        <div class="recommendation-card" id="productSurveyLink">
+          <div class="recommendation-label">Encuesta de productos</div>
+          <div class="recommendation-text">Califica aroma, duracion y presentacion de los perfumes.</div>
+        </div>
+        <div class="recommendation-card" id="contactLink">
+          <div class="recommendation-label">Contacto y solicitudes</div>
+          <div class="recommendation-text">Pide informacion sobre un servicio o producto especifico.</div>
+        </div>
+      </div>
     </div>
 
     <!-- CATALOG PAGE -->
@@ -774,6 +860,28 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="cards-scroll" id="catalogGrid">
         <!-- Catalog products will be loaded here -->
       </div>
+    </div>
+
+    <!-- SEARCH PAGE -->
+    <div class="page info-page" id="searchPage">
+      <div class="section-header">
+        <div class="section-title">Busqueda de productos</div>
+        <div class="section-link" id="searchBack">Volver</div>
+      </div>
+      <div class="inline-filter">
+        <input type="search" class="form-input" id="searchInput" placeholder="Buscar perfume, marca, nota u ocasion">
+      </div>
+      <div class="search-mode-grid">
+        <button class="search-mode-btn active" data-search-mode="name" type="button">Producto</button>
+        <button class="search-mode-btn" data-search-mode="brand" type="button">Marca</button>
+        <button class="search-mode-btn" data-search-mode="notes" type="button">Notas</button>
+        <button class="search-mode-btn" data-search-mode="occasion" type="button">Interes</button>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">4 busquedas posibles</div>
+        <div class="profile-sub">Producto, marca, notas aromaticas e interes u ocasion.</div>
+      </div>
+      <div id="searchResults" class="action-grid"></div>
     </div>
 
     <!-- REGISTER PAGE -->
@@ -1099,6 +1207,169 @@ textarea.form-input{resize:vertical;min-height:80px;}
       </div>
     </div>
 
+    <!-- USER INSIGHTS PAGE -->
+    <div class="page info-page" id="insightsPage">
+      <div class="section-header">
+        <div class="section-title">Areas y productos</div>
+        <div class="section-link" id="insightsBack">Volver</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Areas mas visitadas</div>
+        <div class="profile-sub">Resumen de las secciones con mayor actividad.</div>
+        <div class="data-list" id="userAreaVisits"></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Productos mas visitados</div>
+        <div class="profile-sub">Fragancias con mas consultas de detalle.</div>
+        <div class="data-list" id="userProductVisits"></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Mas y menos vendidos</div>
+        <div class="profile-sub">Comparacion de ventas acumuladas por producto.</div>
+        <div class="data-list" id="userSalesBalance"></div>
+      </div>
+    </div>
+
+    <!-- SITE SURVEY PAGE -->
+    <div class="page info-page" id="siteSurveyPage">
+      <div class="section-header">
+        <div class="section-title">Encuesta del sitio</div>
+        <div class="section-link" id="siteSurveyBack">Volver</div>
+      </div>
+      <form id="siteSurveyForm" class="auth-form" style="padding:20px;">
+        <div class="form-group">
+          <label class="form-label">Diseno visual</label>
+          <select class="form-input" id="siteSurveyDesign" required>
+            <option value="">Calificar</option>
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Bajo</option>
+            <option value="1">1 - Malo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Desempeno del sitio</label>
+          <select class="form-input" id="siteSurveyPerformance" required>
+            <option value="">Calificar</option>
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Bajo</option>
+            <option value="1">1 - Malo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Facilidad de uso</label>
+          <select class="form-input" id="siteSurveyUsability" required>
+            <option value="">Calificar</option>
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Bajo</option>
+            <option value="1">1 - Malo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Comentario</label>
+          <textarea class="form-input" id="siteSurveyComment" placeholder="Cuentanos que mejorar"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Enviar encuesta</button>
+      </form>
+    </div>
+
+    <!-- PRODUCT SURVEY PAGE -->
+    <div class="page info-page" id="productSurveyPage">
+      <div class="section-header">
+        <div class="section-title">Encuesta productos</div>
+        <div class="section-link" id="productSurveyBack">Volver</div>
+      </div>
+      <form id="productSurveyForm" class="auth-form" style="padding:20px;">
+        <div class="form-group">
+          <label class="form-label">Producto</label>
+          <select class="form-input" id="productSurveyProduct" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Aroma</label>
+          <select class="form-input" id="productSurveyAroma" required>
+            <option value="">Calificar</option>
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Bajo</option>
+            <option value="1">1 - Malo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duracion</label>
+          <select class="form-input" id="productSurveyDuration" required>
+            <option value="">Calificar</option>
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Bajo</option>
+            <option value="1">1 - Malo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Presentacion</label>
+          <select class="form-input" id="productSurveyPresentation" required>
+            <option value="">Calificar</option>
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Bajo</option>
+            <option value="1">1 - Malo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Comentario</label>
+          <textarea class="form-input" id="productSurveyComment" placeholder="Que opinas del producto"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Enviar encuesta</button>
+      </form>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="page info-page" id="contactPage">
+      <div class="section-header">
+        <div class="section-title">Contacto</div>
+        <div class="section-link" id="contactBack">Volver</div>
+      </div>
+      <form id="contactForm" class="auth-form" style="padding:20px;">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-input" id="contactName" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo</label>
+          <input type="email" class="form-input" id="contactEmail" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Servicio o producto que necesita</label>
+          <input type="text" class="form-input" id="contactNeed" placeholder="Ej. perfume masculino, envio, asesoria" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de solicitud</label>
+          <select class="form-input" id="contactType" required>
+            <option value="Mas informacion">Mas informacion</option>
+            <option value="Solicitud de producto">Solicitud de producto</option>
+            <option value="Servicio al cliente">Servicio al cliente</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensaje</label>
+          <textarea class="form-input" id="contactMessage" placeholder="Describe tu requerimiento" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Enviar solicitud</button>
+      </form>
+      <div class="profile-card">
+        <div class="profile-name">Mis solicitudes</div>
+        <div class="profile-sub">Vista del estado y respuesta enviada por mail.</div>
+        <div class="data-list" id="contactHistory"></div>
+      </div>
+    </div>
+
     <!-- ADMIN PAGE -->
     <div class="page info-page" id="adminPage">
       <div class="section-header">
@@ -1135,6 +1406,12 @@ textarea.form-input{resize:vertical;min-height:80px;}
         <button class="btn-primary" id="viewLogsBtn" style="margin:5px;">Ver Logs</button>
       </div>
       <div class="profile-card">
+        <div class="profile-name">Resultados y Requerimientos</div>
+        <button class="btn-primary" id="viewAdminInsightsBtn" style="margin:5px;">Resultados de Visitas</button>
+        <button class="btn-primary" id="viewSurveyResultsBtn" style="margin:5px;">Resultados de Encuestas</button>
+        <button class="btn-primary" id="manageContactsBtn" style="margin:5px;">Contactos y Respuestas</button>
+      </div>
+      <div class="profile-card">
         <div class="profile-name">Noticias</div>
         <button class="btn-primary" id="addNewsBtn" style="margin:5px;">Agregar Noticia</button>
       </div>
@@ -1165,6 +1442,15 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <option value="masculino">Masculino</option>
             <option value="femenino">Femenino</option>
             <option value="unisex">Unisex</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Area o sector</label>
+          <select class="form-input" id="perfumeSector" required>
+            <option value="adultos">Adultos</option>
+            <option value="juvenil">Juvenil</option>
+            <option value="infantil">Infantil</option>
+            <option value="general">General</option>
           </select>
         </div>
         <div class="form-group">
@@ -1277,6 +1563,73 @@ textarea.form-input{resize:vertical;min-height:80px;}
         <div class="section-link" id="logsBack">Volver</div>
       </div>
       <div id="logsList" style="padding:20px;"></div>
+    </div>
+
+    <!-- ADMIN INSIGHTS PAGE -->
+    <div class="page info-page" id="adminInsightsPage">
+      <div class="section-header">
+        <div class="section-title">Resultados de visitas</div>
+        <div class="section-link" id="adminInsightsBack">Volver</div>
+      </div>
+      <div class="date-filter">
+        <input type="date" class="form-input" id="adminInsightsFrom">
+        <input type="date" class="form-input" id="adminInsightsTo">
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Areas mas visitadas</div>
+        <div class="profile-sub">Organizado cronologicamente por fechas seleccionadas.</div>
+        <div class="data-list" id="adminAreaVisits"></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Productos mas visitados</div>
+        <div class="profile-sub">Detalle de productos consultados por los usuarios.</div>
+        <div class="data-list" id="adminProductVisits"></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Productos mas o menos vendidos</div>
+        <div class="profile-sub">Resultado comparativo de ventas por producto.</div>
+        <div class="data-list" id="adminSalesBalance"></div>
+      </div>
+    </div>
+
+    <!-- SURVEY RESULTS PAGE -->
+    <div class="page info-page" id="surveyResultsPage">
+      <div class="section-header">
+        <div class="section-title">Resultados encuestas</div>
+        <div class="section-link" id="surveyResultsBack">Volver</div>
+      </div>
+      <div class="date-filter">
+        <input type="date" class="form-input" id="surveyResultsFrom">
+        <input type="date" class="form-input" id="surveyResultsTo">
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Diseno y desempeno</div>
+        <div class="profile-sub">Promedios de la encuesta del sitio web.</div>
+        <div class="mini-grid" id="siteSurveyStats"></div>
+        <div class="data-list" id="siteSurveyComments"></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Encuestas de productos</div>
+        <div class="profile-sub">Promedios y comentarios por fragancia.</div>
+        <div class="data-list" id="productSurveyStats"></div>
+      </div>
+    </div>
+
+    <!-- ADMIN CONTACTS PAGE -->
+    <div class="page info-page" id="contactsAdminPage">
+      <div class="section-header">
+        <div class="section-title">Contactos</div>
+        <div class="section-link" id="contactsAdminBack">Volver</div>
+      </div>
+      <div class="date-filter">
+        <input type="date" class="form-input" id="contactsFrom">
+        <input type="date" class="form-input" id="contactsTo">
+      </div>
+      <div class="profile-card">
+        <div class="profile-name">Tratamiento de requerimientos</div>
+        <div class="profile-sub">Vista, estado y respuesta al usuario via mail.</div>
+        <div class="data-list" id="adminContactsList"></div>
+      </div>
     </div>
 
   </div>
@@ -1455,6 +1808,52 @@ let userLogs = JSON.parse(localStorage.getItem('userLogs')) || [
   { id: 2, action: 'Added product', user: 'Admin', date: new Date().toLocaleDateString() }
 ];
 
+let areaVisits = JSON.parse(localStorage.getItem('areaVisits')) || [
+  { area: 'Inicio', count: 42, date: '2026-06-02' },
+  { area: 'Catalogo', count: 56, date: '2026-06-03' },
+  { area: 'Detalle de producto', count: 38, date: '2026-06-04' },
+  { area: 'Carrito', count: 21, date: '2026-06-05' },
+  { area: 'Contacto', count: 13, date: '2026-06-06' }
+];
+let productVisits = JSON.parse(localStorage.getItem('productVisits')) || [
+  { id: 1, count: 28, date: '2026-06-02' },
+  { id: 2, count: 19, date: '2026-06-03' },
+  { id: 3, count: 15, date: '2026-06-04' },
+  { id: 4, count: 24, date: '2026-06-05' },
+  { id: 5, count: 11, date: '2026-06-06' },
+  { id: 7, count: 17, date: '2026-06-07' }
+];
+let productSalesActivity = JSON.parse(localStorage.getItem('productSalesActivity')) || [
+  { id: 1, sold: 15, date: '2026-06-02' },
+  { id: 2, sold: 10, date: '2026-06-03' },
+  { id: 3, sold: 8, date: '2026-06-04' },
+  { id: 4, sold: 12, date: '2026-06-05' },
+  { id: 5, sold: 6, date: '2026-06-06' },
+  { id: 7, sold: 9, date: '2026-06-07' }
+];
+let siteSurveyResponses = JSON.parse(localStorage.getItem('siteSurveyResponses')) || [
+  { id: 1, design: 5, performance: 4, usability: 5, comment: 'Interfaz clara y elegante.', date: '2026-06-02' },
+  { id: 2, design: 4, performance: 4, usability: 3, comment: 'La busqueda podria ser mas visible.', date: '2026-06-04' }
+];
+let productSurveyResponses = JSON.parse(localStorage.getItem('productSurveyResponses')) || [
+  { id: 1, productId: 1, aroma: 5, duration: 4, presentation: 5, comment: 'Muy buena fijacion.', date: '2026-06-03' },
+  { id: 2, productId: 4, aroma: 4, duration: 5, presentation: 4, comment: 'Ideal para uso diario.', date: '2026-06-05' }
+];
+let contactRequests = JSON.parse(localStorage.getItem('contactRequests')) || [
+  {
+    id: 1,
+    name: 'Cliente Demo',
+    email: 'bserrudob@gmail.com',
+    need: 'Asesoria para perfume de noche',
+    type: 'Mas informacion',
+    message: 'Necesito una recomendacion para evento formal.',
+    status: 'Pendiente',
+    response: '',
+    date: '2026-06-06'
+  }
+];
+let currentSearchMode = 'name';
+
 // Chart instances storage
 let dashboardCharts = {};
 
@@ -1474,6 +1873,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadProfileData();
   loadSettings();
   applyDefaultPaymentMethod();
+  populateProductSurveySelect();
 });
 
 // Theme functions
@@ -1500,7 +1900,8 @@ function navigateTo(page) {
     item.classList.toggle('active', item.dataset.page === page);
   });
 
-  if (page === 'login' || page === 'admin') {
+  const adminOnlyPages = ['admin', 'addPerfume', 'sales', 'discounts', 'news', 'manageUsers', 'createUser', 'logs', 'adminInsights', 'surveyResults', 'contactsAdmin'];
+  if (page === 'login' || adminOnlyPages.includes(page)) {
     topNav.style.display = 'none';
     bottomNav.style.display = 'none';
   } else {
@@ -1512,6 +1913,19 @@ function navigateTo(page) {
   if (page === 'catalog') {
     renderProducts('all', 'catalogGrid');
   }
+  if (page === 'search') {
+    renderSearchResults();
+  }
+  if (page === 'insights') {
+    renderUserInsights();
+  }
+  if (page === 'productSurvey') {
+    populateProductSurveySelect();
+  }
+  if (page === 'contact') {
+    fillContactDefaults();
+    renderContactHistory();
+  }
   if (page === 'settings') {
     loadSettings();
   }
@@ -1519,11 +1933,319 @@ function navigateTo(page) {
     renderDashboard();
     closeSummaryDropdown();
   }
+  if (page === 'adminInsights') {
+    renderAdminInsights();
+  }
+  if (page === 'surveyResults') {
+    renderSurveyResults();
+  }
+  if (page === 'contactsAdmin') {
+    renderAdminContacts();
+  }
+  recordPageVisit(page);
 }
 
 function showOccasionCatalog(occasion) {
   navigateTo('catalog');
   renderProducts('all', 'catalogGrid', occasion);
+}
+
+function getTodayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[char]);
+}
+
+function productNameById(id) {
+  const product = products.find(p => p.id === Number(id));
+  return product ? product.name : 'Producto eliminado';
+}
+
+function recordPageVisit(page) {
+  const labels = {
+    home: 'Inicio',
+    catalog: 'Catalogo',
+    detail: 'Detalle de producto',
+    cart: 'Carrito',
+    payment: 'Pago',
+    profile: 'Perfil',
+    search: 'Busqueda',
+    insights: 'Areas y productos',
+    siteSurvey: 'Encuesta del sitio',
+    productSurvey: 'Encuesta de productos',
+    contact: 'Contacto'
+  };
+  if (!labels[page]) return;
+  areaVisits.push({ area: labels[page], count: 1, date: getTodayKey() });
+  localStorage.setItem('areaVisits', JSON.stringify(areaVisits));
+}
+
+function recordProductVisit(productId) {
+  productVisits.push({ id: productId, count: 1, date: getTodayKey() });
+  localStorage.setItem('productVisits', JSON.stringify(productVisits));
+}
+
+function recordProductSale(productId, quantity) {
+  productSalesActivity.push({ id: productId, sold: quantity, date: getTodayKey() });
+  localStorage.setItem('productSalesActivity', JSON.stringify(productSalesActivity));
+
+  const existing = sales.find(item => item.id === productId);
+  if (existing) {
+    existing.sold += quantity;
+  } else {
+    sales.push({ id: productId, sold: quantity });
+  }
+  localStorage.setItem('sales', JSON.stringify(sales));
+}
+
+function filterBySelectedDates(records, fromId, toId) {
+  const from = document.getElementById(fromId)?.value;
+  const to = document.getElementById(toId)?.value;
+  return records.filter(record => {
+    if (from && record.date < from) return false;
+    if (to && record.date > to) return false;
+    return true;
+  });
+}
+
+function aggregateRecords(records, key, valueKey) {
+  const grouped = records.reduce((acc, record) => {
+    const groupKey = record[key];
+    if (groupKey === undefined || groupKey === null) return acc;
+    if (!acc[groupKey]) acc[groupKey] = { key: groupKey, total: 0, count: 0, records: [] };
+    acc[groupKey].total += Number(record[valueKey] || 1);
+    acc[groupKey].count += 1;
+    acc[groupKey].records.push(record);
+    return acc;
+  }, {});
+  return Object.values(grouped).sort((a, b) => b.total - a.total);
+}
+
+function renderRanking(containerId, rows, labelFactory, unitLabel) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (!rows.length) {
+    container.innerHTML = '<div class="profile-sub">Sin datos para el rango seleccionado.</div>';
+    return;
+  }
+  container.innerHTML = rows.map((row, index) => `
+    <div class="data-row">
+      <div>
+        <div class="data-label">${escapeHtml(labelFactory(row, index))}</div>
+        <div class="data-sub">${index + 1} en el ranking</div>
+      </div>
+      <div class="data-value">${row.total} ${unitLabel}</div>
+    </div>
+  `).join('');
+}
+
+function renderSalesRanking(containerId, records = productSalesActivity) {
+  const rows = aggregateRecords(records, 'id', 'sold');
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  if (!rows.length) {
+    container.innerHTML = '<div class="profile-sub">Sin ventas registradas.</div>';
+    return;
+  }
+  container.innerHTML = rows.map((row, index) => {
+    const label = index === 0 ? 'Mas vendido' : index === rows.length - 1 ? 'Menos vendido' : 'Ventas registradas';
+    return `
+      <div class="data-row">
+        <div>
+          <div class="data-label">${escapeHtml(productNameById(row.key))}</div>
+          <div class="data-sub">${label}</div>
+        </div>
+        <div class="data-value">${row.total}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderUserInsights() {
+  renderRanking('userAreaVisits', aggregateRecords(areaVisits, 'area', 'count').slice(0, 5), row => row.key, 'visitas');
+  renderRanking('userProductVisits', aggregateRecords(productVisits, 'id', 'count').slice(0, 5), row => productNameById(row.key), 'vistas');
+  renderSalesRanking('userSalesBalance');
+}
+
+function renderAdminInsights() {
+  const areaRange = filterBySelectedDates(areaVisits, 'adminInsightsFrom', 'adminInsightsTo');
+  const productRange = filterBySelectedDates(productVisits, 'adminInsightsFrom', 'adminInsightsTo');
+  const salesRange = filterBySelectedDates(productSalesActivity, 'adminInsightsFrom', 'adminInsightsTo');
+  renderRanking('adminAreaVisits', aggregateRecords(areaRange, 'area', 'count'), row => row.key, 'visitas');
+  renderRanking('adminProductVisits', aggregateRecords(productRange, 'id', 'count'), row => productNameById(row.key), 'vistas');
+  renderSalesRanking('adminSalesBalance', salesRange);
+}
+
+function average(records, field) {
+  if (!records.length) return '0.0';
+  return (records.reduce((sum, record) => sum + Number(record[field] || 0), 0) / records.length).toFixed(1);
+}
+
+function renderSurveyResults() {
+  const siteRange = filterBySelectedDates(siteSurveyResponses, 'surveyResultsFrom', 'surveyResultsTo');
+  const productRange = filterBySelectedDates(productSurveyResponses, 'surveyResultsFrom', 'surveyResultsTo');
+  const siteStats = document.getElementById('siteSurveyStats');
+  const siteComments = document.getElementById('siteSurveyComments');
+  const productStats = document.getElementById('productSurveyStats');
+
+  siteStats.innerHTML = `
+    <div class="mini-stat"><div class="mini-stat-label">Diseno</div><div class="mini-stat-value">${average(siteRange, 'design')}</div></div>
+    <div class="mini-stat"><div class="mini-stat-label">Desempeno</div><div class="mini-stat-value">${average(siteRange, 'performance')}</div></div>
+    <div class="mini-stat"><div class="mini-stat-label">Uso</div><div class="mini-stat-value">${average(siteRange, 'usability')}</div></div>
+    <div class="mini-stat"><div class="mini-stat-label">Respuestas</div><div class="mini-stat-value">${siteRange.length}</div></div>
+  `;
+
+  siteComments.innerHTML = siteRange.length ? siteRange.slice().reverse().map(item => `
+    <div class="data-row">
+      <div>
+        <div class="data-label">${escapeHtml(item.comment || 'Sin comentario')}</div>
+        <div class="data-sub">${escapeHtml(item.date)}</div>
+      </div>
+    </div>
+  `).join('') : '<div class="profile-sub">Sin respuestas de encuesta del sitio.</div>';
+
+  const groupedProducts = aggregateRecords(productRange, 'productId', 'aroma');
+  productStats.innerHTML = groupedProducts.length ? groupedProducts.map(row => {
+    const records = row.records;
+    return `
+      <div class="data-row">
+        <div>
+          <div class="data-label">${escapeHtml(productNameById(row.key))}</div>
+          <div class="data-sub">Aroma ${average(records, 'aroma')} | Duracion ${average(records, 'duration')} | Presentacion ${average(records, 'presentation')}</div>
+          <div class="data-sub">${escapeHtml(records[records.length - 1]?.comment || 'Sin comentario')}</div>
+        </div>
+        <div class="data-value">${records.length}</div>
+      </div>
+    `;
+  }).join('') : '<div class="profile-sub">Sin respuestas de encuesta de productos.</div>';
+}
+
+function populateProductSurveySelect() {
+  const select = document.getElementById('productSurveyProduct');
+  if (!select) return;
+  select.innerHTML = '<option value="">Seleccionar producto</option>' + products.map(product => (
+    `<option value="${product.id}">${escapeHtml(product.name)}</option>`
+  )).join('');
+}
+
+function fillContactDefaults() {
+  const nameInput = document.getElementById('contactName');
+  const emailInput = document.getElementById('contactEmail');
+  if (nameInput && !nameInput.value) nameInput.value = profileData.name || '';
+  if (emailInput && !emailInput.value) emailInput.value = profileData.email || '';
+}
+
+function renderContactHistory() {
+  const container = document.getElementById('contactHistory');
+  if (!container) return;
+  const email = document.getElementById('contactEmail')?.value || profileData.email;
+  const requests = contactRequests.filter(request => request.email === email).slice().reverse();
+  if (!requests.length) {
+    container.innerHTML = '<div class="profile-sub">Aun no tienes solicitudes registradas.</div>';
+    return;
+  }
+  container.innerHTML = requests.map(request => `
+    <div class="data-row">
+      <div>
+        <div class="data-label">${escapeHtml(request.need)}</div>
+        <div class="data-sub">${escapeHtml(request.type)} | ${escapeHtml(request.date)}</div>
+        <div class="data-sub">${escapeHtml(request.message)}</div>
+        <span class="status-pill ${request.status === 'Respondido' ? 'done' : ''}">${escapeHtml(request.status)}</span>
+        ${request.response ? `<div class="data-sub">Respuesta via mail: ${escapeHtml(request.response)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAdminContacts() {
+  const container = document.getElementById('adminContactsList');
+  if (!container) return;
+  const requests = filterBySelectedDates(contactRequests, 'contactsFrom', 'contactsTo').slice().reverse();
+  if (!requests.length) {
+    container.innerHTML = '<div class="profile-sub">Sin requerimientos de contacto en el rango seleccionado.</div>';
+    return;
+  }
+  container.innerHTML = requests.map(request => `
+    <div class="data-row">
+      <div style="width:100%;">
+        <div class="data-label">${escapeHtml(request.name)} | ${escapeHtml(request.email)}</div>
+        <div class="data-sub">${escapeHtml(request.date)} | ${escapeHtml(request.type)} | ${escapeHtml(request.need)}</div>
+        <div class="data-sub">${escapeHtml(request.message)}</div>
+        <span class="status-pill ${request.status === 'Respondido' ? 'done' : ''}">${escapeHtml(request.status)}</span>
+        <div class="response-box">
+          <textarea class="form-input" id="contactResponse${request.id}" placeholder="Respuesta via mail">${escapeHtml(request.response)}</textarea>
+          <button class="btn-primary" type="button" onclick="respondContact(${request.id})">Enviar respuesta via mail</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function respondContact(id) {
+  const request = contactRequests.find(item => item.id === id);
+  const responseInput = document.getElementById(`contactResponse${id}`);
+  const response = responseInput ? responseInput.value.trim() : '';
+  if (!request || !response) {
+    showToast('Escribe una respuesta');
+    return;
+  }
+  request.response = response;
+  request.status = 'Respondido';
+  request.responseDate = getTodayKey();
+  localStorage.setItem('contactRequests', JSON.stringify(contactRequests));
+  renderAdminContacts();
+  renderContactHistory();
+  showToast('Respuesta enviada via mail');
+}
+
+function getSearchText(product, mode) {
+  const occasionLabels = {
+    work: 'trabajo reuniones oficina confianza fresco citrico',
+    romantic: 'romantico citas dulce vainilla floral',
+    special: 'eventos especiales noche intenso celebracion'
+  };
+  const notes = Object.values(product.notes || {}).flat().join(' ');
+  const interest = [
+    product.category,
+    product.sector,
+    ...(product.occasions || []).map(item => occasionLabels[item] || item)
+  ].join(' ');
+  const values = {
+    name: product.name,
+    brand: product.brand,
+    notes,
+    occasion: interest
+  };
+  return String(values[mode] || '').toLowerCase();
+}
+
+function renderSearchResults() {
+  const container = document.getElementById('searchResults');
+  const input = document.getElementById('searchInput');
+  if (!container || !input) return;
+  const query = input.value.trim().toLowerCase();
+  const filtered = query
+    ? products.filter(product => getSearchText(product, currentSearchMode).includes(query))
+    : products.slice(0, 4);
+
+  if (!filtered.length) {
+    container.innerHTML = '<div class="profile-card"><div class="profile-sub">No se encontraron productos para esa busqueda.</div></div>';
+    return;
+  }
+  container.innerHTML = filtered.map(product => `
+    <div class="recommendation-card" onclick="showProductDetailById(${product.id})">
+      <div class="recommendation-label">${escapeHtml(product.name)}</div>
+      <div class="recommendation-text">${escapeHtml(product.brand)} | ${escapeHtml(product.category)} | ${product.price} Bs</div>
+    </div>
+  `).join('');
 }
 
 // Admin functions
@@ -1577,6 +2299,11 @@ function renderDashboard() {
       <div class="profile-sub" style="color: white;margin-top:6px;">Admins: ${numAdmins} • Clientes: ${numClients} • Otros: ${Math.max(0, numUsers - numAdmins - numClients)}</div>
     </div>
   `;
+
+  if (typeof Chart === 'undefined') {
+    initializeSummaryDropdown();
+    return;
+  }
 
   // Use aggregated simulated data from products/sales
   const labels = soldByProduct.map(p => p.name);
@@ -1829,6 +2556,7 @@ function showProductDetailById(id) {
 
 // Product detail
 function showProductDetail(product) {
+  recordProductVisit(product.id);
   document.getElementById('detailImg').src = product.img;
   document.getElementById('detailBrand').textContent = product.brand;
   const sectorText = product.sector ? (product.sector === 'infantil' ? 'Infantil' : product.sector === 'juvenil' ? 'Juvenil' : product.sector === 'adultos' ? 'Adultos' : 'General') : '';
@@ -2096,6 +2824,65 @@ document.getElementById('catalogBack').addEventListener('click', () => {
   navigateTo('home');
 });
 
+document.getElementById('searchBtn').addEventListener('click', () => {
+  navigateTo('search');
+});
+
+document.getElementById('searchBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('searchInput').addEventListener('input', () => {
+  renderSearchResults();
+});
+
+document.querySelectorAll('.search-mode-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.search-mode-btn').forEach(item => item.classList.remove('active'));
+    button.classList.add('active');
+    currentSearchMode = button.dataset.searchMode;
+    renderSearchResults();
+  });
+});
+
+document.getElementById('insightsLink').addEventListener('click', () => {
+  navigateTo('insights');
+});
+
+document.querySelectorAll('.insight-card').forEach(card => {
+  card.addEventListener('click', () => {
+    navigateTo('insights');
+  });
+});
+
+document.getElementById('siteSurveyLink').addEventListener('click', () => {
+  navigateTo('siteSurvey');
+});
+
+document.getElementById('productSurveyLink').addEventListener('click', () => {
+  navigateTo('productSurvey');
+});
+
+document.getElementById('contactLink').addEventListener('click', () => {
+  navigateTo('contact');
+});
+
+document.getElementById('insightsBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('siteSurveyBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('productSurveyBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
+document.getElementById('contactBack').addEventListener('click', () => {
+  navigateTo('home');
+});
+
 document.getElementById('profileBack').addEventListener('click', () => {
   navigateTo('home');
 });
@@ -2145,6 +2932,63 @@ document.getElementById('forgotForm').addEventListener('submit', (e) => {
   navigateTo('login');
 });
 
+document.getElementById('siteSurveyForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  siteSurveyResponses.push({
+    id: siteSurveyResponses.length ? Math.max(...siteSurveyResponses.map(item => item.id)) + 1 : 1,
+    design: Number(document.getElementById('siteSurveyDesign').value),
+    performance: Number(document.getElementById('siteSurveyPerformance').value),
+    usability: Number(document.getElementById('siteSurveyUsability').value),
+    comment: document.getElementById('siteSurveyComment').value.trim(),
+    date: getTodayKey()
+  });
+  localStorage.setItem('siteSurveyResponses', JSON.stringify(siteSurveyResponses));
+  e.target.reset();
+  showToast('Encuesta del sitio enviada');
+  navigateTo('home');
+});
+
+document.getElementById('productSurveyForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  productSurveyResponses.push({
+    id: productSurveyResponses.length ? Math.max(...productSurveyResponses.map(item => item.id)) + 1 : 1,
+    productId: Number(document.getElementById('productSurveyProduct').value),
+    aroma: Number(document.getElementById('productSurveyAroma').value),
+    duration: Number(document.getElementById('productSurveyDuration').value),
+    presentation: Number(document.getElementById('productSurveyPresentation').value),
+    comment: document.getElementById('productSurveyComment').value.trim(),
+    date: getTodayKey()
+  });
+  localStorage.setItem('productSurveyResponses', JSON.stringify(productSurveyResponses));
+  e.target.reset();
+  showToast('Encuesta de producto enviada');
+  navigateTo('home');
+});
+
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  contactRequests.push({
+    id: contactRequests.length ? Math.max(...contactRequests.map(item => item.id)) + 1 : 1,
+    name: document.getElementById('contactName').value.trim(),
+    email: document.getElementById('contactEmail').value.trim(),
+    need: document.getElementById('contactNeed').value.trim(),
+    type: document.getElementById('contactType').value,
+    message: document.getElementById('contactMessage').value.trim(),
+    status: 'Pendiente',
+    response: '',
+    date: getTodayKey()
+  });
+  localStorage.setItem('contactRequests', JSON.stringify(contactRequests));
+  document.getElementById('contactNeed').value = '';
+  document.getElementById('contactMessage').value = '';
+  renderContactHistory();
+  showToast('Solicitud enviada');
+});
+
+document.getElementById('contactEmail').addEventListener('input', () => {
+  renderContactHistory();
+});
+
 document.getElementById('detailBack').addEventListener('click', () => {
   navigateTo('home');
 });
@@ -2183,9 +3027,11 @@ document.querySelectorAll('.payment-method').forEach(method => {
 });
 
 document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+  cart.forEach(item => recordProductSale(item.id, item.quantity));
   cart = [];
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartBadge();
+  updateCartDisplay();
   showToast('Pago confirmado. ¡Gracias por tu compra!');
   navigateTo('home');
 });
@@ -2272,6 +3118,18 @@ document.getElementById('manageDiscountsBtn').addEventListener('click', () => {
   renderDiscounts();
 });
 
+document.getElementById('viewAdminInsightsBtn').addEventListener('click', () => {
+  navigateTo('adminInsights');
+});
+
+document.getElementById('viewSurveyResultsBtn').addEventListener('click', () => {
+  navigateTo('surveyResults');
+});
+
+document.getElementById('manageContactsBtn').addEventListener('click', () => {
+  navigateTo('contactsAdmin');
+});
+
 document.getElementById('addNewsBtn').addEventListener('click', () => {
   navigateTo('news');
   renderNews();
@@ -2293,12 +3151,37 @@ document.getElementById('newsBack').addEventListener('click', () => {
   navigateTo('admin');
 });
 
+document.getElementById('adminInsightsBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('surveyResultsBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+document.getElementById('contactsAdminBack').addEventListener('click', () => {
+  navigateTo('admin');
+});
+
+['adminInsightsFrom', 'adminInsightsTo'].forEach(id => {
+  document.getElementById(id).addEventListener('change', renderAdminInsights);
+});
+
+['surveyResultsFrom', 'surveyResultsTo'].forEach(id => {
+  document.getElementById(id).addEventListener('change', renderSurveyResults);
+});
+
+['contactsFrom', 'contactsTo'].forEach(id => {
+  document.getElementById(id).addEventListener('change', renderAdminContacts);
+});
+
 document.getElementById('addPerfumeForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('perfumeName').value;
   const brand = document.getElementById('perfumeBrand').value;
   const price = parseFloat(document.getElementById('perfumePrice').value);
   const category = document.getElementById('perfumeCategory').value;
+  const sector = document.getElementById('perfumeSector').value;
   const imgInput = document.getElementById('perfumeImg');
   
   if (imgInput.files && imgInput.files[0]) {
@@ -2307,11 +3190,12 @@ document.getElementById('addPerfumeForm').addEventListener('submit', (e) => {
     reader.onload = function(event) {
       const imgData = event.target.result;
       const newProduct = {
-        id: products.length + 1,
+        id: products.length ? Math.max(...products.map(product => product.id)) + 1 : 1,
         name,
         brand,
         price,
         category,
+        sector,
         img: imgData,
         sizes: ['50ml', '100ml'],
         occasions: ['work', 'special'],
@@ -2323,6 +3207,7 @@ document.getElementById('addPerfumeForm').addEventListener('submit', (e) => {
       showToast('Perfume agregado');
       navigateTo('admin');
       renderProducts('all', 'productGrid');
+      populateProductSurveySelect();
     };
     reader.readAsDataURL(file);
   } else {
@@ -2390,9 +3275,10 @@ document.getElementById('createUserForm').addEventListener('submit', (e) => {
   const email = document.getElementById('userEmail').value;
   const role = document.getElementById('userRole').value;
   
-  const newUser = { id: users.length + 1, name, email, role };
+  const newUser = { id: users.length ? Math.max(...users.map(user => user.id)) + 1 : 1, name, email, role };
   users.push(newUser);
   localStorage.setItem('users', JSON.stringify(users));
+  addUserLog(`Registro de usuario: ${name}`);
   showToast('Usuario creado');
   navigateTo('manageUsers');
   renderUsers();
@@ -2402,13 +3288,17 @@ document.getElementById('createUserForm').addEventListener('submit', (e) => {
 function renderSales() {
   const salesList = document.getElementById('salesList');
   salesList.innerHTML = '';
-  products.forEach(product => {
+  const rows = products.map(product => {
     const sale = sales.find(s => s.id === product.id);
-    const sold = sale ? sale.sold : 0;
+    return { product, sold: sale ? sale.sold : 0 };
+  }).sort((a, b) => b.sold - a.sold);
+
+  rows.forEach((row, index) => {
+    const label = index === 0 ? 'Mas vendido' : index === rows.length - 1 ? 'Menos vendido' : 'Ventas';
     salesList.innerHTML += `
       <div class="profile-card" style="margin-bottom:10px;">
-        <div class="profile-name" style="color: white;">${product.name}</div>
-        <div class="profile-sub" style="color: white;">Ventas: ${sold}</div>
+        <div class="profile-name" style="color: white;">${row.product.name}</div>
+        <div class="profile-sub" style="color: white;">${label}: ${row.sold}</div>
       </div>
     `;
   });
@@ -2450,6 +3340,16 @@ function renderNews() {
 }
 
 // User management functions
+function addUserLog(action) {
+  userLogs.unshift({
+    id: userLogs.length ? Math.max(...userLogs.map(log => log.id)) + 1 : 1,
+    action,
+    user: 'Admin',
+    date: new Date().toLocaleDateString()
+  });
+  localStorage.setItem('userLogs', JSON.stringify(userLogs));
+}
+
 function renderUsers() {
   const usersList = document.getElementById('usersList');
   usersList.innerHTML = '';
@@ -2469,16 +3369,20 @@ function editUser(id) {
   const user = users.find(u => u.id === id);
   const newName = prompt('Nuevo nombre:', user.name);
   if (newName) {
+    const oldName = user.name;
     user.name = newName;
     localStorage.setItem('users', JSON.stringify(users));
+    addUserLog(`Modificacion de usuario: ${oldName} a ${newName}`);
     renderUsers();
     showToast('Usuario actualizado');
   }
 }
 
 function deleteUser(id) {
+  const user = users.find(u => u.id === id);
   users = users.filter(u => u.id !== id);
   localStorage.setItem('users', JSON.stringify(users));
+  addUserLog(`Eliminacion de usuario: ${user ? user.name : id}`);
   renderUsers();
   showToast('Usuario eliminado');
 }
